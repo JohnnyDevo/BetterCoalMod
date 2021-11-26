@@ -2,7 +2,9 @@ package me.johnnydevo.bettercoalmod.datagen;
 
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.datagen.client.ModBlockStateProvider;
+import me.johnnydevo.bettercoalmod.datagen.client.ModBlockTagsProvider;
 import me.johnnydevo.bettercoalmod.datagen.client.ModItemModelProvider;
+import me.johnnydevo.bettercoalmod.datagen.client.ModItemTagsProvider;
 import net.minecraft.data.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,6 +25,10 @@ public class DataGenerators {
             ExistingFileHelper helper = event.getExistingFileHelper();
             generator.addProvider(new ModBlockStateProvider(generator, helper));
             generator.addProvider(new ModItemModelProvider(generator, helper));
+
+            ModBlockTagsProvider blockTags = new ModBlockTagsProvider(generator, helper);
+            generator.addProvider(blockTags);
+            generator.addProvider(new ModItemTagsProvider(generator, blockTags, helper));
         }
     }
 }
