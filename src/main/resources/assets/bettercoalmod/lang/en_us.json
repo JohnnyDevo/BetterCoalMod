@@ -1,0 +1,8 @@
+{
+  "block.bettercoalmod.matter_compressor": "Matter Compressor",
+  "block.bettercoalmod.matter_decompressor": "Matter Decompressor",
+  "block.bettercoalmod.matter_recompressor": "Matter Recompressor",
+  "block.bettercoalmod.compressed_coal_block": "Compressed Coal Block",
+
+  "item.bettercoalmod.compressed_coal": "Compressed Coal"
+}

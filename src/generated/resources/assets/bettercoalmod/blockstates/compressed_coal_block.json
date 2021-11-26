@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bettercoalmod:block/compressed_coal_block"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bettercoalmod:block/matter_decompressor"
+    }
+  }
+}
