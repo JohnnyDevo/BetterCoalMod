@@ -5,6 +5,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class TileEntitiesInit {
+public class ModTileEntities {
     public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, BetterCoalMod.MOD_ID);
 }

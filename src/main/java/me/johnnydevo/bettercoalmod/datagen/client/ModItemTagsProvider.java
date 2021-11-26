@@ -1,7 +1,7 @@
 package me.johnnydevo.bettercoalmod.datagen.client;
 
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
-import me.johnnydevo.bettercoalmod.setup.ItemsInit;
+import me.johnnydevo.bettercoalmod.setup.ModItems;
 import me.johnnydevo.bettercoalmod.setup.ModTags;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -21,7 +21,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModTags.Blocks.MATTER_DECOMPRESSOR, ModTags.Items.MATTER_DECOMPRESSOR);
         copy(ModTags.Blocks.MATTER_RECOMPRESSOR, ModTags.Items.MATTER_RECOMPRESSOR);
 
-        tag(ModTags.Items.COMPRESSED_COAL).add(ItemsInit.COMPRESSED_COAL.get());
+        tag(ModTags.Items.COMPRESSED_COAL).add(ModItems.COMPRESSED_COAL.get());
         tag(Tags.Items.INGOTS).addTag(ModTags.Items.COMPRESSED_COAL);
     }
 }

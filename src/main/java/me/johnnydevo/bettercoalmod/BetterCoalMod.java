@@ -1,8 +1,8 @@
 package me.johnnydevo.bettercoalmod;
 
-import me.johnnydevo.bettercoalmod.setup.BlocksInit;
-import me.johnnydevo.bettercoalmod.setup.ItemsInit;
-import me.johnnydevo.bettercoalmod.setup.TileEntitiesInit;
+import me.johnnydevo.bettercoalmod.setup.ModBlocks;
+import me.johnnydevo.bettercoalmod.setup.ModItems;
+import me.johnnydevo.bettercoalmod.setup.ModTileEntities;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -21,8 +21,8 @@ public class BetterCoalMod
         MinecraftForge.EVENT_BUS.register(this);
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        BlocksInit.BLOCKS.register(modEventBus);
-        ItemsInit.ITEMS.register(modEventBus);
-        TileEntitiesInit.TILE_ENTITIES.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
+        ModTileEntities.TILE_ENTITIES.register(modEventBus);
     }
 }
