@@ -1,8 +1,6 @@
 package me.johnnydevo.bettercoalmod;
 
-import me.johnnydevo.bettercoalmod.setup.ModBlocks;
-import me.johnnydevo.bettercoalmod.setup.ModItems;
-import me.johnnydevo.bettercoalmod.setup.ModTileEntities;
+import me.johnnydevo.bettercoalmod.setup.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -24,5 +22,7 @@ public class BetterCoalMod
         ModBlocks.BLOCKS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModTileEntities.TILE_ENTITIES.register(modEventBus);
+        ModContainers.CONTAINERS.register(modEventBus);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
     }
 }
