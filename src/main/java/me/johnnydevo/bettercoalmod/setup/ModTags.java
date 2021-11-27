@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class ModTags {
     public static final class Blocks {
         public static final ITag.INamedTag<Block> COMPRESSED_COAL_BLOCK = BlockTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.COMPRESSED_COAL_BLOCK).toString());
+        public static final ITag.INamedTag<Block> HIGH_QUALITY_CARBON_BLOCK = BlockTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.HIGH_QUALITY_CARBON_BLOCK).toString());
 
         public static final ITag.INamedTag<Block> MATTER_COMPRESSOR = BlockTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "machines/" + ModNames.MATTER_COMPRESSOR).toString());
         public static final ITag.INamedTag<Block> MATTER_DECOMPRESSOR = BlockTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "machines/" + ModNames.MATTER_DECOMPRESSOR).toString());
@@ -20,7 +21,9 @@ public class ModTags {
 
     public static final class Items {
         public static final ITag.INamedTag<Item> COMPRESSED_COAL = ItemTags.bind(new ResourceLocation("forge", "ingots/" + ModNames.COMPRESSED_COAL).toString());
+        public static final ITag.INamedTag<Item> HIGH_QUALITY_CARBON = ItemTags.bind(new ResourceLocation("forge", "gems/" + ModNames.HIGH_QUALITY_CARBON).toString());
         public static final ITag.INamedTag<Item> COMPRESSED_COAL_BLOCK = ItemTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.COMPRESSED_COAL_BLOCK).toString());
+        public static final ITag.INamedTag<Item> HIGH_QUALITY_CARBON_BLOCK = ItemTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.HIGH_QUALITY_CARBON_BLOCK).toString());
 
         public static final ITag.INamedTag<Item> MATTER_COMPRESSOR = ItemTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "machines/" + ModNames.MATTER_COMPRESSOR).toString());
         public static final ITag.INamedTag<Item> MATTER_DECOMPRESSOR = ItemTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "machines/" + ModNames.MATTER_DECOMPRESSOR).toString());

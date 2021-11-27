@@ -16,6 +16,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(ModBlocks.MATTER_COMPRESSOR.get());
         simpleBlock(ModBlocks.MATTER_DECOMPRESSOR.get());
         simpleBlock(ModBlocks.MATTER_RECOMPRESSOR.get());
+
         simpleBlock(ModBlocks.COMPRESSED_COAL_BLOCK.get());
+        simpleBlock(ModBlocks.HIGH_QUALITY_CARBON_BLOCK.get());
     }
 }

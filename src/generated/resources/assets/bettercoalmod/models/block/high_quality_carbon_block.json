@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "bettercoalmod:block/high_quality_carbon_block"
+  }
+}

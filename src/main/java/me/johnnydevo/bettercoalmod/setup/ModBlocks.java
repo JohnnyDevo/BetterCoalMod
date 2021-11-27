@@ -17,6 +17,7 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BetterCoalMod.MOD_ID);
 
     public static final RegistryObject<Block> COMPRESSED_COAL_BLOCK = BLOCKS.register(ModNames.COMPRESSED_COAL_BLOCK, () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
+    public static final RegistryObject<Block> HIGH_QUALITY_CARBON_BLOCK = BLOCKS.register(ModNames.HIGH_QUALITY_CARBON_BLOCK, () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
 
     public static final RegistryObject<MatterCompressor> MATTER_COMPRESSOR = BLOCKS.register(ModNames.MATTER_COMPRESSOR, MatterCompressor::new);
     public static final RegistryObject<MatterDecompressor> MATTER_DECOMPRESSOR = BLOCKS.register(ModNames.MATTER_DECOMPRESSOR, MatterDecompressor::new);

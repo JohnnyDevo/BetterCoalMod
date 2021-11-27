@@ -17,11 +17,15 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     @Override
     public void addTags() {
         copy(ModTags.Blocks.COMPRESSED_COAL_BLOCK, ModTags.Items.COMPRESSED_COAL_BLOCK);
+        copy(ModTags.Blocks.HIGH_QUALITY_CARBON_BLOCK, ModTags.Items.HIGH_QUALITY_CARBON_BLOCK);
+
         copy(ModTags.Blocks.MATTER_COMPRESSOR, ModTags.Items.MATTER_COMPRESSOR);
         copy(ModTags.Blocks.MATTER_DECOMPRESSOR, ModTags.Items.MATTER_DECOMPRESSOR);
         copy(ModTags.Blocks.MATTER_RECOMPRESSOR, ModTags.Items.MATTER_RECOMPRESSOR);
 
         tag(ModTags.Items.COMPRESSED_COAL).add(ModItems.COMPRESSED_COAL.get());
+        tag(ModTags.Items.HIGH_QUALITY_CARBON).add(ModItems.HIGH_QUALITY_CARBON.get());
         tag(Tags.Items.INGOTS).addTag(ModTags.Items.COMPRESSED_COAL);
+        tag(Tags.Items.GEMS).addTag(ModTags.Items.HIGH_QUALITY_CARBON);
     }
 }

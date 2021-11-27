@@ -18,10 +18,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModNames.MATTER_COMPRESSOR, modLoc("block/" + ModNames.MATTER_COMPRESSOR));
         withExistingParent(ModNames.MATTER_DECOMPRESSOR, modLoc("block/" + ModNames.MATTER_DECOMPRESSOR));
         withExistingParent(ModNames.MATTER_RECOMPRESSOR, modLoc("block/" + ModNames.MATTER_RECOMPRESSOR));
+
         withExistingParent(ModNames.COMPRESSED_COAL_BLOCK, modLoc("block/" + ModNames.COMPRESSED_COAL_BLOCK));
+        withExistingParent(ModNames.HIGH_QUALITY_CARBON_BLOCK, modLoc("block/" + ModNames.HIGH_QUALITY_CARBON_BLOCK));
 
         ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
         getBuilder(ModNames.COMPRESSED_COAL).parent(itemGenerated).texture("layer0", "item/" + ModNames.COMPRESSED_COAL);
+        getBuilder(ModNames.HIGH_QUALITY_CARBON).parent(itemGenerated).texture("layer0", "item/" + ModNames.HIGH_QUALITY_CARBON);
     }
 }

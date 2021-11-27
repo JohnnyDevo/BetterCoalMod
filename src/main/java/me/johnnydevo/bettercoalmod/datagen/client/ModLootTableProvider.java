@@ -39,6 +39,8 @@ public class ModLootTableProvider extends LootTableProvider {
         @Override
         protected void addTables() {
             dropSelf(ModBlocks.COMPRESSED_COAL_BLOCK.get());
+            dropSelf(ModBlocks.HIGH_QUALITY_CARBON_BLOCK.get());
+
             dropSelf(ModBlocks.MATTER_COMPRESSOR.get());
             dropSelf(ModBlocks.MATTER_DECOMPRESSOR.get());
             dropSelf(ModBlocks.MATTER_RECOMPRESSOR.get());
