@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/compressed_coal_block"
+    }
+  ],
+  "result": {
+    "item": "bettercoalmod:compressed_coal",
+    "count": 9
+  }
+}

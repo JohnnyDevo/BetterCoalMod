@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dCd",
+    "DfD",
+    "cdc"
+  ],
+  "key": {
+    "D": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "C": {
+      "tag": "forge:storage_blocks/high_quality_carbon_block"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "c": {
+      "tag": "forge:gems/high_quality_carbon"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "bettercoalmod:matter_recompressor"
+  }
+}

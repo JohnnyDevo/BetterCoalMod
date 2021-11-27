@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dCd",
+    "DfD",
+    "cdc"
+  ],
+  "key": {
+    "D": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "C": {
+      "tag": "forge:storage_blocks/compressed_coal_block"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "c": {
+      "tag": "forge:ingots/compressed_coal"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "bettercoalmod:matter_compressor"
+  }
+}

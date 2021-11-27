@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/high_quality_carbon_block"
+    }
+  ],
+  "result": {
+    "item": "bettercoalmod:high_quality_carbon",
+    "count": 9
+  }
+}

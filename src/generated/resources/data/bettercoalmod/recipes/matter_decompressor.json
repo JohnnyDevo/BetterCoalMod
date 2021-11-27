@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ddd",
+    "DfD",
+    "ddd"
+  ],
+  "key": {
+    "D": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "bettercoalmod:matter_decompressor"
+  }
+}
