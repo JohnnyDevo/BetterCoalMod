@@ -12,4 +12,7 @@ public class ModNames {
     //items
     public static final String COMPRESSED_COAL = "compressed_coal";
     public static final String HIGH_QUALITY_CARBON = "high_quality_carbon";
+
+    //recipe serializers
+    public static final String COMPRESSING_RECIPES = "compressing";
 }

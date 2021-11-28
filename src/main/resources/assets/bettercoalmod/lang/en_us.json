@@ -7,5 +7,7 @@
   "block.bettercoalmod.high_quality_carbon_block": "High Quality Carbon Block",
 
   "item.bettercoalmod.compressed_coal": "Compressed Coal",
-  "item.bettercoalmod.high_quality_carbon": "High Quality Carbon"
+  "item.bettercoalmod.high_quality_carbon": "High Quality Carbon",
+  
+  "container.bettercoalmod.matter_compressor": "Matter Compressor"
 }
