@@ -32,6 +32,6 @@ public class MatterCompressorScreen extends ContainerScreen<MatterCompressorCont
 
         blit(pMatrixStack, posX, posY, 0, 0, imageWidth, imageHeight);
 
-        blit(pMatrixStack, posX + 79, posY + 35, 176, 14, menu.getProgressArrowScale() + 1, 16);
+        blit(pMatrixStack, posX + 79, posY + 35, 176, 14, (int)(menu.getProgressArrowScale() * 24), 16);
     }
 }

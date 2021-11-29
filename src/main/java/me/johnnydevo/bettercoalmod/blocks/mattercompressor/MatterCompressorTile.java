@@ -1,9 +1,11 @@
 package me.johnnydevo.bettercoalmod.blocks.mattercompressor;
 
+import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
 import me.johnnydevo.bettercoalmod.setup.ModTileEntities;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.inventory.FurnaceScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -29,12 +31,11 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import javax.annotation.Nullable;
 
 public class MatterCompressorTile extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
-    static final int WORK_TIME = 2 * 20;
-
     private NonNullList<ItemStack> items;
     private final LazyOptional<? extends IItemHandler>[] handlers;
 
     private int progress = 0;
+    private int currentRecipeTime = 0;
 
     private final IIntArray fields = new IIntArray() {
         @Override
@@ -42,6 +43,8 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
             switch (pIndex) {
                 case 0:
                     return progress;
+                case 1:
+                    return currentRecipeTime;
                 default:
                     return 0;
             }
@@ -53,12 +56,14 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
                 case 0:
                     progress = pValue;
                     break;
+                case 1:
+                    currentRecipeTime = pValue;
             }
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
     };
 
@@ -91,6 +96,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
 
         ItemStack current = getItem(1);
         ItemStack output = getWorkOutput(recipe);
+        currentRecipeTime = recipe.getRecipeTime();
 
         if (!current.isEmpty()) {
             int newCount = current.getCount() + output.getCount();
@@ -101,7 +107,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
             }
         }
 
-        if (progress < WORK_TIME) {
+        if (progress < currentRecipeTime) {
             ++progress;
         } else {
             finishWork(recipe, current, output);
@@ -116,11 +122,20 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
         }
 
         progress = 0;
+        currentRecipeTime = 0;
         removeItem(0, 1);
     }
 
     private void stopWork() {
         progress = 0;
+        currentRecipeTime = 0;
+    }
+
+    public float getRecipeProgress() {
+        BetterCoalMod.LOGGER.info("currentRecipeTime = " + fields.get(1) + ". progress = " + fields.get(0) + ".");
+        if (fields.get(1) > 0) {
+            return (float)fields.get(0) / (float)fields.get(1);
+        } else return 0;
     }
 
     @Override
@@ -196,6 +211,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
         ItemStackHelper.loadAllItems(tags, items);
 
         progress = tags.getInt("Progress");
+        currentRecipeTime = tags.getInt("CurrentRecipeTime");
     }
 
     @Override
@@ -203,6 +219,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
         super.save(tags);
         ItemStackHelper.saveAllItems(tags, items);
         tags.putInt("Progress", progress);
+        tags.putInt("CurrentRecipeTime", currentRecipeTime);
         return tags;
     }
 
@@ -218,6 +235,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
     public CompoundNBT getUpdateTag() {
         CompoundNBT tags = super.getUpdateTag();
         tags.putInt("Progress", progress);
+        tags.putInt("CurrentRecipeTime", currentRecipeTime);
         return tags;
     }
 

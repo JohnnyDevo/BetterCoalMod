@@ -1,19 +1,29 @@
 package me.johnnydevo.bettercoalmod.blocks.mattercompressor;
 
+import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModContainers;
+import me.johnnydevo.bettercoalmod.setup.ModRecipes;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MatterCompressorContainer extends Container {
     private IInventory inventory;
     private IIntArray fields;
+    private static List<Item> allowedInputs;
 
     public MatterCompressorContainer(int id, PlayerInventory playerInventory, PacketBuffer buffer) {
         this(id, playerInventory, new MatterCompressorTile(), new IntArray(buffer.readByte()));
@@ -24,7 +34,32 @@ public class MatterCompressorContainer extends Container {
         this.inventory = inventory;
         this.fields = fields;
 
-        addSlot(new Slot(inventory, 0, 56, 35));
+        ClientWorld minecraft = Minecraft.getInstance().level;
+        if (allowedInputs == null && minecraft != null) {
+            allowedInputs = new ArrayList<>();
+            List<CompressingRecipe> recipes = minecraft.getRecipeManager().getAllRecipesFor(ModRecipes.Types.COMPRESSING);
+            for (CompressingRecipe recipe : recipes) {
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    for (ItemStack itemStack : ingredient.getItems()) {
+                        allowedInputs.add(itemStack.getItem());
+                    }
+                }
+            }
+        }
+
+        addSlot(new Slot(inventory, 0, 56, 35) {
+            @Override
+            public boolean mayPlace(ItemStack pStack) {
+                if (allowedInputs != null) {
+                    for (Item item : allowedInputs) {
+                        if (item == pStack.getItem()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } else return true;
+            }
+        });
         addSlot(new Slot(inventory, 1, 117, 35) {
             @Override
             public boolean mayPlace(ItemStack pStack) {
@@ -55,8 +90,12 @@ public class MatterCompressorContainer extends Container {
         return inventory.stillValid(pPlayer);
     }
 
-    public int getProgressArrowScale() {
-        return Math.max(fields.get(0) * 24 / MatterCompressorTile.WORK_TIME, 0);
+    public float getProgressArrowScale() {
+        if (inventory instanceof MatterCompressorTile) {
+            MatterCompressorTile tile = (MatterCompressorTile) inventory;
+            return tile.getRecipeProgress();
+        }
+        return 0;
     }
 
     @Override

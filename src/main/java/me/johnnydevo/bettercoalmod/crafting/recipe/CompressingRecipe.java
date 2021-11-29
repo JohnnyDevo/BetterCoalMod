@@ -17,13 +17,20 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nullable;
 
 public class CompressingRecipe extends SingleItemRecipe {
-    public CompressingRecipe(ResourceLocation pId, Ingredient pIngredient, ItemStack pResult) {
+    private int recipeTime;
+
+    public CompressingRecipe(ResourceLocation pId, Ingredient pIngredient, ItemStack pResult, int recipeTime) {
         super(ModRecipes.Types.COMPRESSING, ModRecipes.Serializers.COMPRESSING.get(), pId, "", pIngredient, pResult);
+        this.recipeTime = recipeTime;
     }
 
     @Override
     public boolean matches(IInventory inv, World level) {
         return this.ingredient.test(inv.getItem(0));
+    }
+
+    public int getRecipeTime() {
+        return recipeTime;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CompressingRecipe> {
@@ -33,9 +40,10 @@ public class CompressingRecipe extends SingleItemRecipe {
             Ingredient ingredient = Ingredient.fromJson(pJson.get("ingredient"));
             ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(pJson, "result"));
             int resultAmount = JSONUtils.getAsInt(pJson, "resultamount");
+            int recipeTime = JSONUtils.getAsInt(pJson, "recipetime");
 
             ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultAmount);
-            return new CompressingRecipe(pRecipeId, ingredient, result);
+            return new CompressingRecipe(pRecipeId, ingredient, result, recipeTime);
         }
 
         @Nullable
@@ -43,13 +51,15 @@ public class CompressingRecipe extends SingleItemRecipe {
         public CompressingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack result = pBuffer.readItem();
-            return new CompressingRecipe(pRecipeId, ingredient, result);
+            int recipeTime = pBuffer.readVarInt();
+            return new CompressingRecipe(pRecipeId, ingredient, result, recipeTime);
         }
 
         @Override
         public void toNetwork(PacketBuffer pBuffer, CompressingRecipe pRecipe) {
             pRecipe.ingredient.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.result);
+            pBuffer.writeVarInt(pRecipe.recipeTime);
         }
     }
 }
