@@ -15,4 +15,8 @@ public class ModNames {
 
     //recipe serializers
     public static final String COMPRESSING_RECIPES = "compressing";
+
+    //jei
+    public static final String JEI_PLUGIN = "better_coal_jei_plugin";
+    public static final String COMPRESSING_CATEGORY = "compressing_category";
 }
