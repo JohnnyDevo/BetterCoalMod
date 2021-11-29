@@ -2,7 +2,6 @@ package me.johnnydevo.bettercoalmod.datagen.client;
 
 
 import com.google.gson.JsonObject;
-import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;

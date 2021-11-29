@@ -1,7 +1,7 @@
 package me.johnnydevo.bettercoalmod.setup;
 
-import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
+import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressor;
 import me.johnnydevo.bettercoalmod.blocks.matterdecompressor.MatterDecompressor;
 import me.johnnydevo.bettercoalmod.blocks.matterrecompressor.MatterRecompressor;

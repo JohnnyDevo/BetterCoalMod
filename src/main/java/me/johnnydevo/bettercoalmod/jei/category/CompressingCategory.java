@@ -1,6 +1,5 @@
 package me.johnnydevo.bettercoalmod.jei.category;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
@@ -14,7 +13,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
 public class CompressingCategory implements IRecipeCategory<CompressingRecipe> {
 

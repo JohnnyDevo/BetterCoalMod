@@ -2,7 +2,7 @@ package me.johnnydevo.bettercoalmod.datagen;
 
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.datagen.client.*;
-import net.minecraft.data.*;
+import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

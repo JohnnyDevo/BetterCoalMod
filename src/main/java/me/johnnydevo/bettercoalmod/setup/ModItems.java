@@ -1,7 +1,7 @@
 package me.johnnydevo.bettercoalmod.setup;
 
-import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
+import me.johnnydevo.bettercoalmod.ModNames;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
