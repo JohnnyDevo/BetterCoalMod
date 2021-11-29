@@ -3,12 +3,11 @@ package me.johnnydevo.bettercoalmod.datagen.client;
 import me.johnnydevo.bettercoalmod.setup.ModBlocks;
 import me.johnnydevo.bettercoalmod.setup.ModItems;
 import me.johnnydevo.bettercoalmod.setup.ModTags;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.block.Blocks;
+import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ForgeRecipeProvider;
 
@@ -34,10 +33,10 @@ public class ModRecipeProvider extends ForgeRecipeProvider {
                 .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
                 .save(consumer);
 
-        //ShapelessRecipeBuilder.shapeless(ModItems.HIGH_QUALITY_CARBON.get(), 9)
-        //        .requires(ModTags.Items.HIGH_QUALITY_CARBON_BLOCK)
-        //        .unlockedBy("has_item", has(ModItems.HIGH_QUALITY_CARBON.get()))
-        //        .save(consumer);
+        ShapelessRecipeBuilder.shapeless(ModItems.HIGH_QUALITY_CARBON.get(), 9)
+                .requires(ModTags.Items.HIGH_QUALITY_CARBON_BLOCK)
+                .unlockedBy("has_item", has(ModItems.HIGH_QUALITY_CARBON.get()))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModBlocks.HIGH_QUALITY_CARBON_BLOCK.get())
                 .define('#', ModTags.Items.HIGH_QUALITY_CARBON)
@@ -81,9 +80,12 @@ public class ModRecipeProvider extends ForgeRecipeProvider {
                 .unlockedBy("has_item", has(ModItems.HIGH_QUALITY_CARBON.get()))
                 .save(consumer);
 
-        CompressingRecipeBuilder.compressing(ModItems.HIGH_QUALITY_CARBON.get(), Ingredient.of(ModTags.Items.COMPRESSED_COAL), 0.2f, 100, 2)
-                .unlockedBy("has_item", has(ModTags.Items.COMPRESSED_COAL))
+        CompressingRecipeBuilder.compressing(Items.DIAMOND, Ingredient.of(ItemTags.COALS), 0.2f, 100, 1)
+                .unlockedBy("has_item", has(ItemTags.COALS))
                 .save(consumer);
 
+        CompressingRecipeBuilder.compressing(ModItems.COMPRESSED_COAL.get(), Ingredient.of(ModTags.Items.HIGH_QUALITY_CARBON), 0.2f, 100, 1)
+                .unlockedBy("has_item", has(ModTags.Items.HIGH_QUALITY_CARBON))
+                .save(consumer);
     }
 }

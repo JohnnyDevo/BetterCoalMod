@@ -1,0 +1,10 @@
+{
+  "type": "bettercoalmod:compressing",
+  "ingredient": {
+    "tag": "minecraft:coals"
+  },
+  "result": "minecraft:diamond",
+  "resultamount": 1,
+  "experience": 0.2,
+  "recipetime": 100
+}

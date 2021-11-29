@@ -48,7 +48,7 @@ public class CompressingRecipeBuilder {
     }
 
     public void save(Consumer<IFinishedRecipe> recipeConsumer) {
-        this.save(recipeConsumer, Registry.ITEM.getKey(this.result));
+        this.save(recipeConsumer, Registry.ITEM.getKey(this.result) + "_from_compressing");
     }
 
     public void save(Consumer<IFinishedRecipe> recipeConsumer, String s) {
