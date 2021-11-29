@@ -4,10 +4,14 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -16,9 +20,14 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class MatterCompressor extends Block {
 
@@ -49,7 +58,21 @@ public class MatterCompressor extends Block {
         TileEntity entity = pLevel.getBlockEntity(pPos);
         if (entity instanceof MatterCompressorTile && pPlayer instanceof ServerPlayerEntity) {
             MatterCompressorTile mct = (MatterCompressorTile) entity;
-            NetworkHooks.openGui((ServerPlayerEntity) pPlayer, mct, mct::encodeExtraData);
+            INamedContainerProvider containerProvider = new INamedContainerProvider() {
+                @Override
+                public ITextComponent getDisplayName() {
+                    return new TranslationTextComponent("screen.bettercoalmod.matter_compressor");
+                }
+
+                @Nullable
+                @Override
+                public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                    return new MatterCompressorContainer(i, pLevel, pPos, playerInventory, playerEntity, mct.fields);
+                }
+            };
+            NetworkHooks.openGui((ServerPlayerEntity) pPlayer, containerProvider, mct::encodeExtraData);
+        } else {
+            throw new IllegalStateException("Our named container provider is missing!");
         }
         return ActionResultType.CONSUME;
     }

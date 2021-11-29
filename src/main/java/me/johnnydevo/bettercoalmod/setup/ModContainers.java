@@ -6,6 +6,10 @@ import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorConta
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -23,5 +27,10 @@ public class ModContainers {
         ScreenManager.register(MATTER_COMPRESSOR.get(), MatterCompressorScreen::new);
     }
 
-    public static final RegistryObject<ContainerType<MatterCompressorContainer>> MATTER_COMPRESSOR = CONTAINERS.register(ModNames.MATTER_COMPRESSOR, () -> IForgeContainerType.create(MatterCompressorContainer::new));
+    public static final RegistryObject<ContainerType<MatterCompressorContainer>> MATTER_COMPRESSOR = CONTAINERS.register(ModNames.MATTER_COMPRESSOR, () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        World world = inv.player.getCommandSenderWorld();
+        IIntArray fields = new IntArray(data.readByte());
+        return new MatterCompressorContainer(windowId, world, pos, inv, inv.player, fields);
+    }));
 }

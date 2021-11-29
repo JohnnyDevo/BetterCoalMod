@@ -5,39 +5,53 @@ import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
 import me.johnnydevo.bettercoalmod.setup.ModTileEntities;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.FurnaceScreen;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.data.ForgeRecipeProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MatterCompressorTile extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
+public class MatterCompressorTile extends TileEntity implements ITickableTileEntity {
+    private static List<Item> allowedInputs;
+
+    private ItemStackHandler itemHandler = createHandler();
+    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+
     private NonNullList<ItemStack> items;
-    private final LazyOptional<? extends IItemHandler>[] handlers;
 
     private int progress = 0;
     private int currentRecipeTime = 0;
 
-    private final IIntArray fields = new IIntArray() {
+    public final IIntArray fields = new IIntArray() {
         @Override
         public int get(int pIndex) {
             switch (pIndex) {
@@ -69,24 +83,42 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
 
     public MatterCompressorTile() {
         super(ModTileEntities.MATTER_COMPRESSOR.get());
-        handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
         items = NonNullList.withSize(2, ItemStack.EMPTY);
+
+        ClientWorld minecraft = Minecraft.getInstance().level;
+        if (allowedInputs == null && minecraft != null) {
+            allowedInputs = new ArrayList<>();
+            List<CompressingRecipe> recipes = minecraft.getRecipeManager().getAllRecipesFor(ModRecipes.Types.COMPRESSING);
+            for (CompressingRecipe recipe : recipes) {
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    for (ItemStack itemStack : ingredient.getItems()) {
+                        allowedInputs.add(itemStack.getItem());
+                    }
+                }
+            }
+        }
     }
 
     void encodeExtraData(PacketBuffer buffer) {
+        buffer.writeBlockPos(getBlockPos());
         buffer.writeByte(fields.getCount());
     }
 
     public CompressingRecipe getRecipe() {
-        if (this.level == null || getItem(0).isEmpty()) {
+        if (this.level == null || itemHandler.getStackInSlot(0).isEmpty()) {
             return null;
         }
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.COMPRESSING, this, this.level).orElse(null);
+        for (CompressingRecipe recipe : level.getRecipeManager().getAllRecipesFor(ModRecipes.Types.COMPRESSING)) {
+            if (recipe.getIngredients().get(0).getItems()[0].getItem() == itemHandler.getStackInSlot(0).getItem()) {
+                return recipe;
+            }
+        }
+        return null;
     }
 
     private ItemStack getWorkOutput(CompressingRecipe recipe) {
         if (recipe != null) {
-            return recipe.assemble(this);
+            return recipe.getResultItem();
         }
         return ItemStack.EMPTY;
     }
@@ -94,7 +126,7 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
     private void doWork(CompressingRecipe recipe) {
         assert this.level != null;
 
-        ItemStack current = getItem(1);
+        ItemStack current = itemHandler.getStackInSlot(1);
         ItemStack output = getWorkOutput(recipe);
         currentRecipeTime = recipe.getRecipeTime();
 
@@ -109,92 +141,23 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
 
         if (progress < currentRecipeTime) {
             ++progress;
+            setChanged();
         } else {
-            finishWork(recipe, current, output);
+            finishWork(recipe);
+            setChanged();
         }
     }
 
-    private void finishWork(CompressingRecipe recipe, ItemStack current, ItemStack output) {
-        if (!current.isEmpty()) {
-            current.grow(output.getCount());
-        } else {
-            setItem(1, output);
-        }
-
+    private void finishWork(CompressingRecipe recipe) {
+        itemHandler.insertItem(1, recipe.getResultItem().copy(), false);
         progress = 0;
         currentRecipeTime = 0;
-        removeItem(0, 1);
+        itemHandler.extractItem(0, 1, false);
     }
 
     private void stopWork() {
         progress = 0;
         currentRecipeTime = 0;
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction pSide) {
-        return new int[]{0, 1};
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int pIndex, ItemStack pItemStack, @Nullable Direction pDirection) {
-        return canPlaceItem(pIndex, pItemStack);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int pIndex, ItemStack pStack, Direction pDirection) {
-        return pIndex == 1;
-    }
-
-    @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.bettercoalmod.matter_compressor");
-    }
-
-    @Override
-    protected Container createMenu(int pId, PlayerInventory pPlayer) {
-        return new MatterCompressorContainer(pId, pPlayer, this, this.fields);
-    }
-
-    @Override
-    public int getContainerSize() {
-        return 2;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return getItem(0).isEmpty() && getItem(1).isEmpty();
-    }
-
-    @Override
-    public ItemStack getItem(int pIndex) {
-        return items.get(pIndex);
-    }
-
-    @Override
-    public ItemStack removeItem(int pIndex, int pCount) {
-        return ItemStackHelper.removeItem(items, pIndex, pCount);
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int pIndex) {
-        return ItemStackHelper.takeItem(items, pIndex);
-    }
-
-    @Override
-    public void setItem(int pIndex, ItemStack pStack) {
-        items.set(pIndex, pStack);
-    }
-
-    @Override
-    public boolean stillValid(PlayerEntity pPlayer) {
-        return level != null && level.getBlockEntity(worldPosition) == this &&
-                pPlayer.distanceToSqr(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ()) <= 64;
-    }
-
-    @Override
-    public void clearContent() {
-        items.clear();
     }
 
     @Override
@@ -234,14 +197,8 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (!this.remove && side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (side == Direction.UP) {
-                return this.handlers[0].cast();
-            } else if (side == Direction.DOWN) {
-                return this.handlers[1].cast();
-            } else {
-                return this.handlers[2].cast();
-            }
+        if (!this.remove && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return handler.cast();
         } else {
             return super.getCapability(cap, side);
         }
@@ -250,10 +207,40 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
     @Override
     public void setRemoved() {
         super.setRemoved();
+        handler.invalidate();
+    }
 
-        for (LazyOptional<? extends IItemHandler> handler : this.handlers) {
-            handler.invalidate();
-        }
+    private ItemStackHandler createHandler() {
+        return new ItemStackHandler(2) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                if (slot == 0) {
+                    if (allowedInputs != null) {
+                        for (Item item : allowedInputs) {
+                            if (item == stack.getItem()) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Nonnull
+            @Override
+            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                if (!isItemValid(slot, stack)) {
+                    return stack;
+                }
+                return super.insertItem(slot, stack, simulate);
+            }
+        };
     }
 
     @Override
