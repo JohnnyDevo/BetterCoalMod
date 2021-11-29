@@ -1,5 +1,6 @@
 package me.johnnydevo.bettercoalmod.blocks.mattercompressor;
 
+import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModContainers;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
@@ -92,8 +93,9 @@ public class MatterCompressorContainer extends Container {
 
     public float getProgressArrowScale() {
         if (inventory instanceof MatterCompressorTile) {
-            MatterCompressorTile tile = (MatterCompressorTile) inventory;
-            return tile.getRecipeProgress();
+            if (fields.get(1) > 0) {
+                return (float)fields.get(0) / (float)fields.get(1);
+            } else return 0;
         }
         return 0;
     }

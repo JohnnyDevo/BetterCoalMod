@@ -131,13 +131,6 @@ public class MatterCompressorTile extends LockableTileEntity implements ISidedIn
         currentRecipeTime = 0;
     }
 
-    public float getRecipeProgress() {
-        BetterCoalMod.LOGGER.info("currentRecipeTime = " + fields.get(1) + ". progress = " + fields.get(0) + ".");
-        if (fields.get(1) > 0) {
-            return (float)fields.get(0) / (float)fields.get(1);
-        } else return 0;
-    }
-
     @Override
     public int[] getSlotsForFace(Direction pSide) {
         return new int[]{0, 1};
