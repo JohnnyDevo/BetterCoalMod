@@ -30,9 +30,9 @@ public class CompressingRecipe extends SingleItemRecipe {
         public CompressingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(pJson.get("ingredient"));
             ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(pJson, "result"));
-            int count = JSONUtils.getAsInt(pJson, "count");
+            int resultAmount = JSONUtils.getAsInt(pJson, "resultamount");
 
-            ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), count);
+            ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultAmount);
             return new CompressingRecipe(pRecipeId, ingredient, result);
         }
 

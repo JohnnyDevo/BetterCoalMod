@@ -1,12 +1,10 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "tag": "forge:storage_blocks/high_quality_carbon_block"
-    }
-  ],
-  "result": {
-    "item": "bettercoalmod:high_quality_carbon",
-    "count": 9
-  }
+  "type": "bettercoalmod:compressing",
+  "ingredient": {
+    "tag": "forge:ingots/compressed_coal"
+  },
+  "result": "bettercoalmod:high_quality_carbon",
+  "resultamount": 2,
+  "experience": 0.2,
+  "recipetime": 100
 }
