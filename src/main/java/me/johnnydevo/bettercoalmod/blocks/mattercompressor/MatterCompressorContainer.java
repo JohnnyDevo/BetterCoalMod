@@ -20,11 +20,11 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nonnull;
 
 public class MatterCompressorContainer extends Container {
-    private IIntArray fields;
+    private final IIntArray fields;
 
-    private TileEntity tileEntity;
-    private PlayerEntity playerEntity;
-    private IItemHandler playerInventory;
+    private final TileEntity tileEntity;
+    private final PlayerEntity playerEntity;
+    private final IItemHandler playerInventory;
 
     public MatterCompressorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray fields) {
         super(ModContainers.MATTER_COMPRESSOR.get(), windowId);
@@ -35,8 +35,8 @@ public class MatterCompressorContainer extends Container {
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 56, 35));
-                addSlot(new SlotItemHandler(h, 1, 117, 35) {
+                addSlot(new SlotItemHandler(h, 0, 58, 35));
+                addSlot(new SlotItemHandler(h, 1, 116, 35) {
                     @Override
                     public boolean mayPlace(@Nonnull ItemStack stack) {
                         return false;
@@ -45,11 +45,9 @@ public class MatterCompressorContainer extends Container {
             });
         }
 
-        layoutPlayerInventorySlots(10, 70);
+        layoutPlayerInventorySlots(8, 84);
 
-        if (fields != null) {
-            addDataSlots(fields);
-        }
+        addDataSlots(fields);
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

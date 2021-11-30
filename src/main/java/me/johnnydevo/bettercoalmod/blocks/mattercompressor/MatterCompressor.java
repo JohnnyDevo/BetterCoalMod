@@ -59,7 +59,7 @@ public class MatterCompressor extends Block {
             INamedContainerProvider containerProvider = new INamedContainerProvider() {
                 @Override
                 public ITextComponent getDisplayName() {
-                    return new TranslationTextComponent("screen.bettercoalmod.matter_compressor");
+                    return new TranslationTextComponent("block.bettercoalmod.matter_compressor");
                 }
 
                 @Nullable
