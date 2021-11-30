@@ -199,6 +199,23 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
         handler.invalidate();
     }
 
+    public List<ItemStack> dropInventory() {
+        List<ItemStack> drops = new ArrayList<>();
+
+        for (int slot = 0; slot < itemHandler.getSlots(); ++slot) {
+            while (!itemHandler.getStackInSlot(slot).isEmpty()) {
+                int amount = getLevel().random.nextInt(21) + 10;
+
+                if (!itemHandler.extractItem(slot, amount, true).isEmpty()) {
+                    ItemStack itemStack = itemHandler.extractItem(slot, amount, false);
+                    drops.add(itemStack);
+                }
+            }
+        }
+
+        return drops;
+    }
+
     private ItemStackHandler createHandler() {
         return new ItemStackHandler(2) {
             @Override
