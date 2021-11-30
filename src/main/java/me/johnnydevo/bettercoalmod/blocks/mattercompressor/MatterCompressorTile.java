@@ -122,7 +122,7 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
         if (!current.isEmpty()) {
             int newCount = current.getCount() + output.getCount();
 
-            if (!ItemStack.matches(current, output) || newCount > output.getMaxStackSize()) {
+            if (!current.sameItem(output) || newCount > output.getMaxStackSize()) {
                 stopWork();
                 return;
             }
