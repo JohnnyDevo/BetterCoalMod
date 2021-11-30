@@ -9,5 +9,12 @@
   "item.bettercoalmod.compressed_coal": "Compressed Coal",
   "item.bettercoalmod.high_quality_carbon": "High Quality Carbon",
 
+  "item.bettercoalmod.carbon_bow": "Carbon Bow",
+  "item.bettercoalmod.carbon_shovel": "Carbon Shovel",
+  "item.bettercoalmod.carbon_pickaxe": "Carbon Pickaxe",
+  "item.bettercoalmod.carbon_axe": "Carbon Axe",
+  "item.bettercoalmod.carbon_hoe": "Carbon Hoe",
+  "item.bettercoalmod.carbon_sword": "Carbon Sword",
+
   "container.bettercoalmod.matter_compressor": "Matter Compressor"
 }

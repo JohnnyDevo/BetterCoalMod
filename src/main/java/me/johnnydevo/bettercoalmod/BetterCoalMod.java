@@ -28,12 +28,4 @@ public class BetterCoalMod
         ModContainers.CONTAINERS.register(modEventBus);
         ModRecipes.Serializers.RECIPE_SERIALIZERS.register(modEventBus);
     }
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class Client {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            ModContainers.registerScreens(event);
-        }
-    }
 }

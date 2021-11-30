@@ -14,7 +14,12 @@ public class ModNames {
     public static final String HIGH_QUALITY_CARBON = "high_quality_carbon";
 
     //tools
+    public static final String CARBON_SWORD = "carbon_sword";
+    public static final String CARBON_SHOVEL = "carbon_shovel";
     public static final String CARBON_PICKAXE = "carbon_pickaxe";
+    public static final String CARBON_AXE = "carbon_axe";
+    public static final String CARBON_HOE = "carbon_hoe";
+    public static final String CARBON_BOW = "carbon_bow";
 
     //recipe serializers
     public static final String COMPRESSING_RECIPES = "compressing";

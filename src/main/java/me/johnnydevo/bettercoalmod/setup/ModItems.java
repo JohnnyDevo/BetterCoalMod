@@ -2,11 +2,9 @@ package me.johnnydevo.bettercoalmod.setup;
 
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
+import me.johnnydevo.bettercoalmod.items.CarbonBow;
 import me.johnnydevo.bettercoalmod.items.ModItemTier;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,5 +23,10 @@ public class ModItems {
     public static final RegistryObject<Item> COMPRESSED_COAL = ITEMS.register(ModNames.COMPRESSED_COAL, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
     public static final RegistryObject<Item> HIGH_QUALITY_CARBON = ITEMS.register(ModNames.HIGH_QUALITY_CARBON, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
 
+    public static final RegistryObject<Item> CARBON_SWORD = ITEMS.register(ModNames.CARBON_SWORD, () -> new SwordItem(ModItemTier.CARBON, 3, -2.4F, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static final RegistryObject<Item> CARBON_SHOVEL = ITEMS.register(ModNames.CARBON_SHOVEL, () -> new ShovelItem(ModItemTier.CARBON, 1.5F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
     public static final RegistryObject<Item> CARBON_PICKAXE = ITEMS.register(ModNames.CARBON_PICKAXE, () -> new PickaxeItem(ModItemTier.CARBON, 1, -2.8F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+    public static final RegistryObject<Item> CARBON_AXE = ITEMS.register(ModNames.CARBON_AXE, () -> new AxeItem(ModItemTier.CARBON, 5.0F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+    public static final RegistryObject<Item> CARBON_HOE = ITEMS.register(ModNames.CARBON_HOE, () -> new HoeItem(ModItemTier.CARBON, -3, 0.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+    public static final RegistryObject<Item> CARBON_BOW = ITEMS.register(ModNames.CARBON_BOW, () -> new CarbonBow(new Item.Properties().tab(ItemGroup.TAB_COMBAT).durability(1082)));
 }

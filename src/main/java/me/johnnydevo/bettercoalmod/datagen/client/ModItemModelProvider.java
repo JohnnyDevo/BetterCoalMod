@@ -26,6 +26,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         getBuilder(ModNames.COMPRESSED_COAL).parent(itemGenerated).texture("layer0", "item/" + ModNames.COMPRESSED_COAL);
         getBuilder(ModNames.HIGH_QUALITY_CARBON).parent(itemGenerated).texture("layer0", "item/" + ModNames.HIGH_QUALITY_CARBON);
+        getBuilder(ModNames.CARBON_SWORD).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SWORD);
+        getBuilder(ModNames.CARBON_SHOVEL).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SHOVEL);
         getBuilder(ModNames.CARBON_PICKAXE).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_PICKAXE);
+        getBuilder(ModNames.CARBON_AXE).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_AXE);
+        getBuilder(ModNames.CARBON_HOE).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_HOE);
+
+        //couldn't figure out how to automatically generate bow, doesn't seem to exist in base game
+        //getBuilder(ModNames.CARBON_BOW).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW);
+        getBuilder(ModNames.CARBON_BOW + "_pulling_0").parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW + "_pulling_0");
+        getBuilder(ModNames.CARBON_BOW + "_pulling_1").parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW + "_pulling_1");
+        getBuilder(ModNames.CARBON_BOW + "_pulling_2").parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW + "_pulling_2");
+
     }
 }
