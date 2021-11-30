@@ -13,6 +13,9 @@ public class ModNames {
     public static final String COMPRESSED_COAL = "compressed_coal";
     public static final String HIGH_QUALITY_CARBON = "high_quality_carbon";
 
+    //tools
+    public static final String CARBON_PICKAXE = "carbon_pickaxe";
+
     //recipe serializers
     public static final String COMPRESSING_RECIPES = "compressing";
 
