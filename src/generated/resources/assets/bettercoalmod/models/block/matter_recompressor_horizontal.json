@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
     "side": "bettercoalmod:block/matter_recompressor_sides",
     "end": "bettercoalmod:block/matter_recompressor"

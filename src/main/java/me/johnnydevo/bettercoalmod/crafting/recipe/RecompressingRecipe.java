@@ -1,6 +1,7 @@
 package me.johnnydevo.bettercoalmod.crafting.recipe;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
 import net.minecraft.inventory.IInventory;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,11 +20,11 @@ import javax.annotation.Nullable;
 public class RecompressingRecipe implements IRecipe<IInventory> {
     private ResourceLocation id;
     private ItemStack result;
-    private Ingredient[] ingredients;
+    private NonNullList<Ingredient> ingredients;
     private float experience;
     private int recipeTime;
 
-    public RecompressingRecipe(ResourceLocation id, Ingredient[] ingredients, ItemStack result, int recipeTime, float experience) {
+    public RecompressingRecipe(ResourceLocation id, NonNullList<Ingredient> ingredients, ItemStack result, int recipeTime, float experience) {
         this.id = id;
         this.ingredients = ingredients;
         this.result = result;
@@ -69,12 +71,22 @@ public class RecompressingRecipe implements IRecipe<IInventory> {
         return recipeTime;
     }
 
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> ret = NonNullList.create();
+        ret.addAll(ingredients);
+        return ret;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecompressingRecipe> {
 
         @Override
         public RecompressingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
             JsonArray ingredientsArray = JSONUtils.getAsJsonArray(pJson, "ingredients");
-            Ingredient[] ingredients = new Ingredient[]{Ingredient.fromJson(ingredientsArray.get(0)), Ingredient.fromJson(ingredientsArray.get(1))};
+            NonNullList<Ingredient> ingredients = NonNullList.create();
+            for (JsonElement e : ingredientsArray) {
+                ingredients.add(Ingredient.fromJson(e));
+            }
             ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(pJson, "result"));
             int resultAmount = JSONUtils.getAsInt(pJson, "resultamount");
             int recipeTime = JSONUtils.getAsInt(pJson, "recipetime");
@@ -89,9 +101,9 @@ public class RecompressingRecipe implements IRecipe<IInventory> {
         public RecompressingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
             int ingredientCount = pBuffer.readVarInt();
             //System.out.println("ingredientCount = " + ingredientCount);
-            Ingredient[] ingredients = new Ingredient[ingredientCount];
+            NonNullList<Ingredient> ingredients = NonNullList.create();
             for (int i = 0; i < ingredientCount; ++i) {
-                ingredients[i] = Ingredient.fromNetwork(pBuffer);
+                ingredients.add(Ingredient.fromNetwork(pBuffer));
                 //System.out.println("ingredient " + i + " = " + ingredients[i]);
             }
             ItemStack result = pBuffer.readItem();
@@ -103,9 +115,10 @@ public class RecompressingRecipe implements IRecipe<IInventory> {
 
         @Override
         public void toNetwork(PacketBuffer pBuffer, RecompressingRecipe pRecipe) {
-            pBuffer.writeVarInt(pRecipe.ingredients.length);
-            pRecipe.ingredients[0].toNetwork(pBuffer);
-            pRecipe.ingredients[1].toNetwork(pBuffer);
+            pBuffer.writeVarInt(pRecipe.ingredients.size());
+            for (Ingredient ingredient : pRecipe.ingredients) {
+                ingredient.toNetwork(pBuffer);
+            }
             pBuffer.writeItem(pRecipe.result);
             pBuffer.writeVarInt(pRecipe.recipeTime);
             pBuffer.writeFloat(pRecipe.experience);

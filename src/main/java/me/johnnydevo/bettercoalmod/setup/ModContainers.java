@@ -4,6 +4,8 @@ import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorContainer;
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorScreen;
+import me.johnnydevo.bettercoalmod.blocks.matterrecompressor.MatterRecompressorContainer;
+import me.johnnydevo.bettercoalmod.blocks.matterrecompressor.MatterRecompressorScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.IIntArray;
@@ -25,6 +27,7 @@ public class ModContainers {
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens(FMLClientSetupEvent event) {
         ScreenManager.register(MATTER_COMPRESSOR.get(), MatterCompressorScreen::new);
+        ScreenManager.register(MATTER_RECOMPRESSOR.get(), MatterRecompressorScreen::new);
     }
 
     public static final RegistryObject<ContainerType<MatterCompressorContainer>> MATTER_COMPRESSOR = CONTAINERS.register(ModNames.MATTER_COMPRESSOR, () -> IForgeContainerType.create((windowId, inv, data) -> {
@@ -32,5 +35,12 @@ public class ModContainers {
         World world = inv.player.getCommandSenderWorld();
         IIntArray fields = new IntArray(data.readByte());
         return new MatterCompressorContainer(windowId, world, pos, inv, inv.player, fields);
+    }));
+
+    public static final RegistryObject<ContainerType<MatterRecompressorContainer>> MATTER_RECOMPRESSOR = CONTAINERS.register(ModNames.MATTER_RECOMPRESSOR, () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        World world = inv.player.getCommandSenderWorld();
+        IIntArray fields = new IntArray(data.readByte());
+        return new MatterRecompressorContainer(windowId, world, pos, inv, inv.player, fields);
     }));
 }
