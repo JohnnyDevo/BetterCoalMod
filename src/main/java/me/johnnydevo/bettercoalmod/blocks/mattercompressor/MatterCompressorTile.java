@@ -35,8 +35,6 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
     private ItemStackHandler itemHandler = createHandler();
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-    private NonNullList<ItemStack> items;
-
     private int progress = 0;
     private int currentRecipeTime = 0;
 
@@ -72,7 +70,6 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
 
     public MatterCompressorTile() {
         super(ModTileEntities.MATTER_COMPRESSOR.get());
-        items = NonNullList.withSize(2, ItemStack.EMPTY);
 
         ClientWorld minecraft = Minecraft.getInstance().level;
         if (allowedInputs == null && minecraft != null) {
@@ -152,8 +149,11 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
     @Override
     public void load(BlockState state, CompoundNBT tags) {
         super.load(state, tags);
-        this.items = NonNullList.withSize(2, ItemStack.EMPTY);
+
+        NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(tags, items);
+        itemHandler.insertItem(0, items.get(0), false);
+        itemHandler.insertItem(1, items.get(1), false);
 
         progress = tags.getInt("Progress");
         currentRecipeTime = tags.getInt("CurrentRecipeTime");
@@ -162,7 +162,12 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
     @Override
     public CompoundNBT save(CompoundNBT tags) {
         super.save(tags);
+
+        NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+        items.set(0, itemHandler.getStackInSlot(0));
+        items.set(1, itemHandler.getStackInSlot(1));
         ItemStackHelper.saveAllItems(tags, items);
+
         tags.putInt("Progress", progress);
         tags.putInt("CurrentRecipeTime", currentRecipeTime);
         return tags;
@@ -172,7 +177,12 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT tags = getUpdateTag();
+
+        NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+        items.set(0, itemHandler.getStackInSlot(0));
+        items.set(1, itemHandler.getStackInSlot(1));
         ItemStackHelper.saveAllItems(tags, items);
+
         return new SUpdateTileEntityPacket(worldPosition, 1, tags);
     }
 

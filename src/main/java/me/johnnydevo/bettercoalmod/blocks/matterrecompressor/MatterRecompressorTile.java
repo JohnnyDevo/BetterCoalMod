@@ -35,8 +35,6 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
     private ItemStackHandler itemHandler = createHandler();
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-    private NonNullList<ItemStack> items;
-
     private int progress = 0;
     private int currentRecipeTime = 0;
 
@@ -72,7 +70,6 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
 
     public MatterRecompressorTile() {
         super(ModTileEntities.MATTER_RECOMPRESSOR.get());
-        items = NonNullList.withSize(3, ItemStack.EMPTY);
 
         ClientWorld minecraft = Minecraft.getInstance().level;
         if (allowedInputs == null && minecraft != null) {
@@ -168,8 +165,13 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
     @Override
     public void load(BlockState state, CompoundNBT tags) {
         super.load(state, tags);
-        items = NonNullList.withSize(3, ItemStack.EMPTY);
+
+        NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(tags, items);
+        System.out.println(items);
+        itemHandler.insertItem(0, items.get(0), false);
+        itemHandler.insertItem(1, items.get(1), false);
+        itemHandler.insertItem(2, items.get(2), false);
 
         progress = tags.getInt("Progress");
         currentRecipeTime = tags.getInt("CurrentRecipeTime");
@@ -178,7 +180,13 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
     @Override
     public CompoundNBT save(CompoundNBT tags) {
         super.save(tags);
+
+        NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+        items.set(0, itemHandler.getStackInSlot(0));
+        items.set(1, itemHandler.getStackInSlot(1));
+        items.set(2, itemHandler.getStackInSlot(2));
         ItemStackHelper.saveAllItems(tags, items);
+
         tags.putInt("Progress", progress);
         tags.putInt("CurrentRecipeTime", currentRecipeTime);
         return tags;
@@ -188,7 +196,13 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT tags = getUpdateTag();
+
+        NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+        items.set(0, itemHandler.getStackInSlot(0));
+        items.set(1, itemHandler.getStackInSlot(1));
+        items.set(2, itemHandler.getStackInSlot(2));
         ItemStackHelper.saveAllItems(tags, items);
+
         return new SUpdateTileEntityPacket(worldPosition, 1, tags);
     }
 
