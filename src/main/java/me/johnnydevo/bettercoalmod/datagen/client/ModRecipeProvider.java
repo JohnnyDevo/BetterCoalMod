@@ -1,5 +1,7 @@
 package me.johnnydevo.bettercoalmod.datagen.client;
 
+import me.johnnydevo.bettercoalmod.datagen.client.recipebuilders.CompressingRecipeBuilder;
+import me.johnnydevo.bettercoalmod.datagen.client.recipebuilders.RecompressingRecipeBuilder;
 import me.johnnydevo.bettercoalmod.setup.ModBlocks;
 import me.johnnydevo.bettercoalmod.setup.ModItems;
 import me.johnnydevo.bettercoalmod.setup.ModTags;
@@ -82,11 +84,11 @@ public class ModRecipeProvider extends ForgeRecipeProvider {
                 .unlockedBy("has_item", has(ModItems.HIGH_QUALITY_CARBON.get()))
                 .save(consumer);
 
-        CompressingRecipeBuilder.compressing(Items.DIAMOND, Ingredient.of(ItemTags.COALS), 0.2f, 100, 1)
+        CompressingRecipeBuilder.build(Items.DIAMOND, Ingredient.of(ItemTags.COALS), 0.2f, 500, 1)
                 .unlockedBy("has_item", has(ItemTags.COALS))
                 .save(consumer);
 
-        CompressingRecipeBuilder.compressing(ModItems.COMPRESSED_COAL.get(), Ingredient.of(ModTags.Items.HIGH_QUALITY_CARBON), 0.2f, 100, 1)
+        RecompressingRecipeBuilder.build(ModItems.COMPRESSED_COAL.get(), Ingredient.of(ModTags.Items.HIGH_QUALITY_CARBON), Ingredient.of(ModTags.Items.HIGH_QUALITY_CARBON),0.2f, 100, 1)
                 .unlockedBy("has_item", has(ModTags.Items.HIGH_QUALITY_CARBON))
                 .save(consumer);
     }

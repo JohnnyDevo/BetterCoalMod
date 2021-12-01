@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import me.johnnydevo.bettercoalmod.setup.ModRecipes;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.SingleItemRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -17,55 +17,52 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class CompressingRecipe extends SingleItemRecipe {
-    private final int recipeTime;
-    private final float experience;
+public class DecompressingRecipe extends AbstractCookingRecipe {
 
-    public CompressingRecipe(ResourceLocation pId, Ingredient pIngredient, ItemStack pResult, int recipeTime, float experience) {
-        super(ModRecipes.Types.COMPRESSING, ModRecipes.Serializers.COMPRESSING.get(), pId, "", pIngredient, pResult);
-        this.recipeTime = recipeTime;
-        this.experience = experience;
+    public DecompressingRecipe(ResourceLocation pId, Ingredient pIngredient, ItemStack pResult, float experience, int cookingTime) {
+        super(ModRecipes.Types.DECOMPRESSING, pId,"", pIngredient, pResult, experience, cookingTime);
     }
 
     @Override
     public boolean matches(IInventory inv, World level) {
-        return this.ingredient.test(inv.getItem(0));
+        return ingredient.test(inv.getItem(0));
     }
 
-    public int getRecipeTime() {
-        return recipeTime;
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return ModRecipes.Serializers.DECOMPRESSING.get();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CompressingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<DecompressingRecipe> {
 
         @Override
-        public CompressingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+        public DecompressingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
             JsonArray ingredientsArray = JSONUtils.getAsJsonArray(pJson, "ingredients");
             Ingredient ingredient = Ingredient.fromJson(ingredientsArray.get(0));
             ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(pJson, "result"));
             int resultAmount = JSONUtils.getAsInt(pJson, "resultamount");
-            int recipeTime = JSONUtils.getAsInt(pJson, "recipetime");
-            float experience = JSONUtils.getAsFloat(pJson, "experience");
+            int recipeTime = JSONUtils.getAsInt(pJson, "cookingtime");
+            int experience = JSONUtils.getAsInt(pJson, "experience");
 
             ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultAmount);
-            return new CompressingRecipe(pRecipeId, ingredient, result, recipeTime, experience);
+            return new DecompressingRecipe(pRecipeId, ingredient, result, experience, recipeTime);
         }
 
         @Nullable
         @Override
-        public CompressingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
+        public DecompressingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack result = pBuffer.readItem();
             int recipeTime = pBuffer.readVarInt();
             float experience = pBuffer.readFloat();
-            return new CompressingRecipe(pRecipeId, ingredient, result, recipeTime, experience);
+            return new DecompressingRecipe(pRecipeId, ingredient, result, experience, recipeTime);
         }
 
         @Override
-        public void toNetwork(PacketBuffer pBuffer, CompressingRecipe pRecipe) {
+        public void toNetwork(PacketBuffer pBuffer, DecompressingRecipe pRecipe) {
             pRecipe.ingredient.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.result);
-            pBuffer.writeVarInt(pRecipe.recipeTime);
+            pBuffer.writeVarInt(pRecipe.cookingTime);
             pBuffer.writeFloat(pRecipe.experience);
         }
     }

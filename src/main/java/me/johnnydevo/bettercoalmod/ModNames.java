@@ -23,8 +23,12 @@ public class ModNames {
 
     //recipe serializers
     public static final String COMPRESSING_RECIPES = "compressing";
+    public static final String DECOMPRESSING_RECIPES = "decompressing";
+    public static final String RECOMPRESSING_RECIPES = "recompressing";
 
     //jei
     public static final String JEI_PLUGIN = "better_coal_jei_plugin";
     public static final String COMPRESSING_CATEGORY = "compressing_category";
+    public static final String DECOMPRESSING_CATEGORY = "decompressing_category";
+    public static final String RECOMPRESSING_CATEGORY = "recompressing_category";
 }

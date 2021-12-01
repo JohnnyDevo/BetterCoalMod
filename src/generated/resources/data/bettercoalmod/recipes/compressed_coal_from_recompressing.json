@@ -1,0 +1,15 @@
+{
+  "type": "bettercoalmod:recompressing",
+  "ingredients": [
+    {
+      "tag": "forge:gems/high_quality_carbon"
+    },
+    {
+      "tag": "forge:gems/high_quality_carbon"
+    }
+  ],
+  "result": "bettercoalmod:compressed_coal",
+  "resultamount": 1,
+  "experience": 0.2,
+  "recipetime": 100
+}
