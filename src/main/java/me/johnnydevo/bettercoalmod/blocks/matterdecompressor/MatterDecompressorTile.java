@@ -27,10 +27,15 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
     public MatterDecompressorTile() {
         super(ModTileEntities.MATTER_DECOMPRESSOR.get());
         recipeType = ModRecipes.Types.DECOMPRESSING;
-        allowedInputs = new ArrayList<>();
-        populateInputs(allowedInputs);
+        if (allowedInputs == null) {
+            allowedInputs = new ArrayList<>();
+            populateInputs(allowedInputs);
+            if (allowedInputs.size() == 0) {
+                allowedInputs = null;
+            }
+        }
         outputSlot = 2;
-        inputSlots = new int[]{0, 1};
+        inputSlots = new int[]{0};
     }
 
     @Override

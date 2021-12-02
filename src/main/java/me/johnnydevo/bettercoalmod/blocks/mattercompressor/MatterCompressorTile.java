@@ -37,8 +37,13 @@ public class MatterCompressorTile extends AbstractCompressorTile<CompressingReci
     public MatterCompressorTile() {
         super(ModTileEntities.MATTER_COMPRESSOR.get());
         recipeType = ModRecipes.Types.COMPRESSING;
-        allowedInputs = new ArrayList<>();
-        populateInputs(allowedInputs);
+        if (allowedInputs == null) {
+            allowedInputs = new ArrayList<>();
+            populateInputs(allowedInputs);
+            if (allowedInputs.size() == 0) {
+                allowedInputs = null;
+            }
+        }
         outputSlot = 1;
         inputSlots = new int[]{0};
     }

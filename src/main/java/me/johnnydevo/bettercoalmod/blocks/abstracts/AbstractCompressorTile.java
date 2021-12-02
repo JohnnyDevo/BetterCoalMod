@@ -63,8 +63,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
 
     protected void populateInputs(List<Item> allowedInputs) {
         ClientWorld minecraft = Minecraft.getInstance().level;
-        if (allowedInputs == null && minecraft != null) {
-            allowedInputs = new ArrayList<>();
+        if (minecraft != null) {
             List<T> recipes = minecraft.getRecipeManager().getAllRecipesFor(recipeType);
             for (T recipe : recipes) {
                 for (Ingredient ingredient : recipe.getIngredients()) {

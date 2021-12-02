@@ -20,8 +20,13 @@ public class MatterRecompressorTile extends AbstractCompressorTile<Recompressing
     public MatterRecompressorTile() {
         super(ModTileEntities.MATTER_RECOMPRESSOR.get());
         recipeType = ModRecipes.Types.RECOMPRESSING;
-        allowedInputs = new ArrayList<>();
-        populateInputs(allowedInputs);
+        if (allowedInputs == null) {
+            allowedInputs = new ArrayList<>();
+            populateInputs(allowedInputs);
+            if (allowedInputs.size() == 0) {
+                allowedInputs = null;
+            }
+        }
         outputSlot = 2;
         inputSlots = new int[]{0, 1};
     }
