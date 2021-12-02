@@ -10,7 +10,7 @@ public class MatterCompressorScreen extends AbstractCompressorScreen<MatterCompr
 
     public MatterCompressorScreen(MatterCompressorContainer pMenu, PlayerInventory pPlayerInventory, ITextComponent pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-        texture = new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_recompressor.png");
+        texture = new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_compressor.png");
     }
 
     @Override
