@@ -23,14 +23,12 @@ public class MatterCompressorContainer extends Container {
     private final IIntArray fields;
 
     private final TileEntity tileEntity;
-    private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
 
-    public MatterCompressorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray fields) {
+    public MatterCompressorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, IIntArray fields) {
         super(ModContainers.MATTER_COMPRESSOR.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.fields = fields;
-        playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
         if (tileEntity != null) {
@@ -40,6 +38,14 @@ public class MatterCompressorContainer extends Container {
                     @Override
                     public boolean mayPlace(@Nonnull ItemStack stack) {
                         return false;
+                    }
+
+                    @Override
+                    public ItemStack onTake(PlayerEntity pPlayer, ItemStack pStack) {
+                        if (tileEntity instanceof MatterCompressorTile) {
+                            ((MatterCompressorTile)tileEntity).awardExp(pPlayer);
+                        }
+                        return super.onTake(pPlayer, pStack);
                     }
                 });
             });

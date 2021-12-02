@@ -27,6 +27,10 @@ public class CompressingRecipe extends SingleItemRecipe {
         this.experience = experience;
     }
 
+    public float getExperience() {
+        return experience;
+    }
+
     @Override
     public boolean matches(IInventory inv, World level) {
         return this.ingredient.test(inv.getItem(0));

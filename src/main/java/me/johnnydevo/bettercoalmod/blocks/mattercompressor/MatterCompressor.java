@@ -70,7 +70,7 @@ public class MatterCompressor extends RotatedPillarBlock {
                 @Nullable
                 @Override
                 public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                    return new MatterCompressorContainer(i, pLevel, pPos, playerInventory, playerEntity, mct.fields);
+                    return new MatterCompressorContainer(i, pLevel, pPos, playerInventory, mct.fields);
                 }
             };
             NetworkHooks.openGui((ServerPlayerEntity) pPlayer, containerProvider, mct::encodeExtraData);

@@ -78,6 +78,10 @@ public class RecompressingRecipe implements IRecipe<IInventory> {
         return ret;
     }
 
+    public float getExperience() {
+        return experience;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecompressingRecipe> {
 
         @Override
@@ -100,15 +104,12 @@ public class RecompressingRecipe implements IRecipe<IInventory> {
         @Override
         public RecompressingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
             int ingredientCount = pBuffer.readVarInt();
-            //System.out.println("ingredientCount = " + ingredientCount);
             NonNullList<Ingredient> ingredients = NonNullList.create();
             for (int i = 0; i < ingredientCount; ++i) {
                 ingredients.add(Ingredient.fromNetwork(pBuffer));
-                //System.out.println("ingredient " + i + " = " + ingredients[i]);
             }
             ItemStack result = pBuffer.readItem();
             int recipeTime = pBuffer.readVarInt();
-            //System.out.println("recipe time " + recipeTime);
             float experience = pBuffer.readFloat();
             return new RecompressingRecipe(pRecipeId, ingredients, result, recipeTime, experience);
         }

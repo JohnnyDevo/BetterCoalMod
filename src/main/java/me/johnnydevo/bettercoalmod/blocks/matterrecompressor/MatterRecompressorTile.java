@@ -6,6 +6,7 @@ import me.johnnydevo.bettercoalmod.setup.ModTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,6 +38,7 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
 
     private int progress = 0;
     private int currentRecipeTime = 0;
+    private float savedExp = 0.0F;
 
     public final IIntArray fields = new IIntArray() {
         @Override
@@ -153,6 +155,7 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
         itemHandler.insertItem(2, recipe.getResultItem().copy(), false);
         progress = 0;
         currentRecipeTime = 0;
+        savedExp += recipe.getExperience();
         itemHandler.extractItem(0, 1, false);
         itemHandler.extractItem(1, 1, false);
     }
@@ -227,6 +230,11 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
     public void setRemoved() {
         super.setRemoved();
         handler.invalidate();
+    }
+
+    public void awardExp(PlayerEntity player) {
+        player.giveExperiencePoints((int)savedExp);
+        savedExp = 0;
     }
 
     private ItemStackHandler createHandler() {
