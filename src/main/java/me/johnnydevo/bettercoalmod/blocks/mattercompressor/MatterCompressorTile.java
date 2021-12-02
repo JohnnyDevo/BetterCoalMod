@@ -160,6 +160,7 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
 
         progress = tags.getInt("Progress");
         currentRecipeTime = tags.getInt("CurrentRecipeTime");
+        savedExp = tags.getFloat("savedExp");
     }
 
     @Override
@@ -173,6 +174,7 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
 
         tags.putInt("Progress", progress);
         tags.putInt("CurrentRecipeTime", currentRecipeTime);
+        tags.putFloat("savedExp", savedExp);
         return tags;
     }
 
@@ -194,6 +196,7 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
         CompoundNBT tags = super.getUpdateTag();
         tags.putInt("Progress", progress);
         tags.putInt("CurrentRecipeTime", currentRecipeTime);
+        tags.putFloat("savedExp", savedExp);
         return tags;
     }
 
@@ -246,8 +249,9 @@ public class MatterCompressorTile extends TileEntity implements ITickableTileEnt
     }
 
     public void awardExp(PlayerEntity player) {
-        player.giveExperiencePoints((int)savedExp);
-        savedExp = 0;
+        int reward = (int)savedExp;
+        player.giveExperiencePoints(reward);
+        savedExp -= reward;
     }
 
     @Override
