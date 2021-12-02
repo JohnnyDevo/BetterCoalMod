@@ -2,7 +2,6 @@ package me.johnnydevo.bettercoalmod.jei.category;
 
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
-import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.crafting.recipe.RecompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModBlocks;
 import mezz.jei.api.constants.VanillaTypes;

@@ -1,7 +1,6 @@
 package me.johnnydevo.bettercoalmod.datagen.client.recipebuilders;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
