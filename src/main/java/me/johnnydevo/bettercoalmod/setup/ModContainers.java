@@ -4,6 +4,8 @@ import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorContainer;
 import me.johnnydevo.bettercoalmod.blocks.mattercompressor.MatterCompressorScreen;
+import me.johnnydevo.bettercoalmod.blocks.matterdecompressor.MatterDecompressorContainer;
+import me.johnnydevo.bettercoalmod.blocks.matterdecompressor.MatterDecompressorScreen;
 import me.johnnydevo.bettercoalmod.blocks.matterrecompressor.MatterRecompressorContainer;
 import me.johnnydevo.bettercoalmod.blocks.matterrecompressor.MatterRecompressorScreen;
 import net.minecraft.client.gui.ScreenManager;
@@ -27,6 +29,7 @@ public class ModContainers {
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens(FMLClientSetupEvent event) {
         ScreenManager.register(MATTER_COMPRESSOR.get(), MatterCompressorScreen::new);
+        ScreenManager.register(MATTER_DECOMPRESSOR.get(), MatterDecompressorScreen::new);
         ScreenManager.register(MATTER_RECOMPRESSOR.get(), MatterRecompressorScreen::new);
     }
 
@@ -35,6 +38,13 @@ public class ModContainers {
         World world = inv.player.getCommandSenderWorld();
         IIntArray fields = new IntArray(data.readByte());
         return new MatterCompressorContainer(windowId, world, pos, inv, fields);
+    }));
+
+    public static final RegistryObject<ContainerType<MatterDecompressorContainer>> MATTER_DECOMPRESSOR = CONTAINERS.register(ModNames.MATTER_DECOMPRESSOR, () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        World world = inv.player.getCommandSenderWorld();
+        IIntArray fields = new IntArray(data.readByte());
+        return new MatterDecompressorContainer(windowId, world, pos, inv, fields);
     }));
 
     public static final RegistryObject<ContainerType<MatterRecompressorContainer>> MATTER_RECOMPRESSOR = CONTAINERS.register(ModNames.MATTER_RECOMPRESSOR, () -> IForgeContainerType.create((windowId, inv, data) -> {

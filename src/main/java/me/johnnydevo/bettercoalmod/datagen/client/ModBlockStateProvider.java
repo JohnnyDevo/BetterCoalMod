@@ -22,7 +22,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         ResourceLocation matterCompressorSides = new ResourceLocation(BetterCoalMod.MOD_ID, "block/" + ModNames.MATTER_COMPRESSOR + "_sides");
         axisBlock(ModBlocks.MATTER_COMPRESSOR.get(), matterCompressorSides, matterCompressorTop);
 
-        simpleBlock(ModBlocks.MATTER_DECOMPRESSOR.get());
+        ResourceLocation matterDecompressorTop = new ResourceLocation(BetterCoalMod.MOD_ID, "block/" + ModNames.MATTER_DECOMPRESSOR);
+        ResourceLocation matterDecompressorSides = new ResourceLocation(BetterCoalMod.MOD_ID, "block/" + ModNames.MATTER_DECOMPRESSOR + "_sides");
+        axisBlock(ModBlocks.MATTER_DECOMPRESSOR.get(), matterDecompressorSides, matterDecompressorTop);
 
         ResourceLocation matterRecompressorTop = new ResourceLocation(BetterCoalMod.MOD_ID, "block/" + ModNames.MATTER_RECOMPRESSOR);
         ResourceLocation matterRecompressorSides = new ResourceLocation(BetterCoalMod.MOD_ID, "block/" + ModNames.MATTER_RECOMPRESSOR + "_sides");

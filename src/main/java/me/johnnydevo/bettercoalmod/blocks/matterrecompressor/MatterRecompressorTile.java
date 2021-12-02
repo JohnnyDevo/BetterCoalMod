@@ -144,9 +144,9 @@ public class MatterRecompressorTile extends TileEntity implements ITickableTileE
 
         if (progress < currentRecipeTime) {
             ++progress;
-            setChanged();
-        } else {
-            finishWork(recipe);
+            if (progress == currentRecipeTime) {
+                finishWork(recipe);
+            }
             setChanged();
         }
     }

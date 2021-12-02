@@ -41,7 +41,7 @@ public class DecompressingRecipe extends AbstractCookingRecipe {
             Ingredient ingredient = Ingredient.fromJson(ingredientsArray.get(0));
             ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(pJson, "result"));
             int resultAmount = JSONUtils.getAsInt(pJson, "resultamount");
-            int recipeTime = JSONUtils.getAsInt(pJson, "cookingtime");
+            int recipeTime = JSONUtils.getAsInt(pJson, "recipetime");
             int experience = JSONUtils.getAsInt(pJson, "experience");
 
             ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultAmount);
