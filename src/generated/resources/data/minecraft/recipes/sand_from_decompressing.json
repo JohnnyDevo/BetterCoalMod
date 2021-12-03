@@ -2,11 +2,11 @@
   "type": "bettercoalmod:decompressing",
   "ingredients": [
     {
-      "tag": "forge:gems/diamond"
+      "tag": "forge:glass"
     }
   ],
-  "result": "bettercoalmod:high_quality_carbon",
+  "result": "minecraft:sand",
   "resultamount": 1,
-  "experience": 0.2,
+  "experience": 0.0,
   "recipetime": 200
 }

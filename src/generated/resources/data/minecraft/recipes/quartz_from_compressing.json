@@ -2,11 +2,11 @@
   "type": "bettercoalmod:compressing",
   "ingredients": [
     {
-      "tag": "minecraft:coals"
+      "item": "minecraft:netherrack"
     }
   ],
-  "result": "minecraft:diamond",
+  "result": "minecraft:quartz",
   "resultamount": 1,
-  "experience": 0.2,
+  "experience": 0.0,
   "recipetime": 800
 }

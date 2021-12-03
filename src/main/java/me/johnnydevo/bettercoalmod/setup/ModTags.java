@@ -8,6 +8,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 public class ModTags {
     public static final class Blocks {
@@ -22,6 +23,9 @@ public class ModTags {
     public static final class Items {
         public static final ITag.INamedTag<Item> COMPRESSED_COAL = ItemTags.bind(new ResourceLocation("forge", "ingots/" + ModNames.COMPRESSED_COAL).toString());
         public static final ITag.INamedTag<Item> HIGH_QUALITY_CARBON = ItemTags.bind(new ResourceLocation("forge", "gems/" + ModNames.HIGH_QUALITY_CARBON).toString());
+        public static final ITag.INamedTag<Item> CARBON_ROD = ItemTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "rods/" + ModNames.CARBON_ROD).toString());
+        public static final ITag.INamedTag<Item> CARBON_FIBER = ItemTags.bind(new ResourceLocation(BetterCoalMod.MOD_ID, "string/" + ModNames.CARBON_FIBER).toString());
+
         public static final ITag.INamedTag<Item> COMPRESSED_COAL_BLOCK = ItemTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.COMPRESSED_COAL_BLOCK).toString());
         public static final ITag.INamedTag<Item> HIGH_QUALITY_CARBON_BLOCK = ItemTags.bind(new ResourceLocation("forge", "storage_blocks/" + ModNames.HIGH_QUALITY_CARBON_BLOCK).toString());
 

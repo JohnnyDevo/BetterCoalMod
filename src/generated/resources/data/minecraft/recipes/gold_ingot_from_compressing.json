@@ -1,0 +1,12 @@
+{
+  "type": "bettercoalmod:compressing",
+  "ingredients": [
+    {
+      "item": "minecraft:golden_carrot"
+    }
+  ],
+  "result": "minecraft:gold_ingot",
+  "resultamount": 1,
+  "experience": 0.1,
+  "recipetime": 200
+}

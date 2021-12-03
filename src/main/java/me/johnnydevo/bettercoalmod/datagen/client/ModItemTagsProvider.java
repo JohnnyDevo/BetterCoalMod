@@ -25,7 +25,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
         tag(ModTags.Items.COMPRESSED_COAL).add(ModItems.COMPRESSED_COAL.get());
         tag(ModTags.Items.HIGH_QUALITY_CARBON).add(ModItems.HIGH_QUALITY_CARBON.get());
+        tag(ModTags.Items.CARBON_ROD).add(ModItems.CARBON_ROD.get());
+        tag(ModTags.Items.CARBON_FIBER).add(ModItems.CARBON_FIBER.get());
+
         tag(Tags.Items.INGOTS).addTag(ModTags.Items.COMPRESSED_COAL);
         tag(Tags.Items.GEMS).addTag(ModTags.Items.HIGH_QUALITY_CARBON);
+        tag(Tags.Items.RODS).addTag(ModTags.Items.CARBON_ROD);
+        tag(Tags.Items.STRING).addTag(ModTags.Items.CARBON_FIBER);
     }
 }

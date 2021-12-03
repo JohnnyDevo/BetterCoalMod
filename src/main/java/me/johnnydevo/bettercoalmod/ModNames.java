@@ -12,6 +12,8 @@ public class ModNames {
     //items
     public static final String COMPRESSED_COAL = "compressed_coal";
     public static final String HIGH_QUALITY_CARBON = "high_quality_carbon";
+    public static final String CARBON_ROD = "carbon_rod";
+    public static final String CARBON_FIBER = "carbon_fiber";
 
     //tools
     public static final String CARBON_SWORD = "carbon_sword";

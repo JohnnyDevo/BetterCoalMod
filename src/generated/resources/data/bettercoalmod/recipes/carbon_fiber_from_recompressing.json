@@ -1,0 +1,15 @@
+{
+  "type": "bettercoalmod:recompressing",
+  "ingredients": [
+    {
+      "tag": "forge:gems/high_quality_carbon"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "result": "bettercoalmod:carbon_fiber",
+  "resultamount": 3,
+  "experience": 0.2,
+  "recipetime": 200
+}

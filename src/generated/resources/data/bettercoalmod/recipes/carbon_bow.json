@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " RF",
+    "R F",
+    " RF"
+  ],
+  "key": {
+    "F": {
+      "tag": "bettercoalmod:string/carbon_fiber"
+    },
+    "R": {
+      "tag": "bettercoalmod:rods/carbon_rod"
+    }
+  },
+  "result": {
+    "item": "bettercoalmod:carbon_bow"
+  }
+}

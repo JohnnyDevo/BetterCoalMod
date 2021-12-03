@@ -1,0 +1,15 @@
+{
+  "type": "bettercoalmod:recompressing",
+  "ingredients": [
+    {
+      "tag": "forge:gems/high_quality_carbon"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": "bettercoalmod:carbon_rod",
+  "resultamount": 4,
+  "experience": 0.2,
+  "recipetime": 200
+}

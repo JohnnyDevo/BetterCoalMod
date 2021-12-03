@@ -8,6 +8,7 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.system.CallbackI;
 
 public class ModItems {
 
@@ -22,6 +23,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> COMPRESSED_COAL = ITEMS.register(ModNames.COMPRESSED_COAL, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
     public static final RegistryObject<Item> HIGH_QUALITY_CARBON = ITEMS.register(ModNames.HIGH_QUALITY_CARBON, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
+    public static final RegistryObject<Item> CARBON_ROD = ITEMS.register(ModNames.CARBON_ROD, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
+    public static final RegistryObject<Item> CARBON_FIBER = ITEMS.register(ModNames.CARBON_FIBER, () -> new Item(new Item.Properties().stacksTo(64).tab(ItemGroup.TAB_MATERIALS)));
 
     public static final RegistryObject<Item> CARBON_SWORD = ITEMS.register(ModNames.CARBON_SWORD, () -> new SwordItem(ModItemTier.CARBON, 3, -2.4F, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
     public static final RegistryObject<Item> CARBON_SHOVEL = ITEMS.register(ModNames.CARBON_SHOVEL, () -> new ShovelItem(ModItemTier.CARBON, 1.5F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
