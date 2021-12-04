@@ -3,7 +3,9 @@ package me.johnnydevo.bettercoalmod.setup;
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
 import me.johnnydevo.bettercoalmod.items.CarbonBow;
+import me.johnnydevo.bettercoalmod.items.ModArmorMaterial;
 import me.johnnydevo.bettercoalmod.items.ModItemTier;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,4 +34,9 @@ public class ModItems {
     public static final RegistryObject<Item> CARBON_AXE = ITEMS.register(ModNames.CARBON_AXE, () -> new AxeItem(ModItemTier.CARBON, 5.0F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
     public static final RegistryObject<Item> CARBON_HOE = ITEMS.register(ModNames.CARBON_HOE, () -> new HoeItem(ModItemTier.CARBON, -3, 0.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
     public static final RegistryObject<Item> CARBON_BOW = ITEMS.register(ModNames.CARBON_BOW, () -> new CarbonBow(new Item.Properties().tab(ItemGroup.TAB_COMBAT).durability(1082)));
+
+    public static final RegistryObject<Item> CARBON_CHESTPLATE = ITEMS.register(ModNames.CARBON_CHESTPLATE, () -> new ArmorItem(ModArmorMaterial.CARBON, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static final RegistryObject<Item> CARBON_HELMET = ITEMS.register(ModNames.CARBON_HELMET, () -> new ArmorItem(ModArmorMaterial.CARBON, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static final RegistryObject<Item> CARBON_LEGGINGS = ITEMS.register(ModNames.CARBON_LEGS, () -> new ArmorItem(ModArmorMaterial.CARBON, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static final RegistryObject<Item> CARBON_BOOTS = ITEMS.register(ModNames.CARBON_BOOTS, () -> new ArmorItem(ModArmorMaterial.CARBON, EquipmentSlotType.FEET, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
 }

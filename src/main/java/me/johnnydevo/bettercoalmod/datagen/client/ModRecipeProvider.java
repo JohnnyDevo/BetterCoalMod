@@ -29,6 +29,7 @@ public class ModRecipeProvider extends ForgeRecipeProvider {
         buildStorageRecipes(consumer);
         buildMachineRecipes(consumer);
         buildToolRecipes(consumer);
+        buildArmorRecipes(consumer);
         buildCompressingRecipes(consumer);
     }
 
@@ -148,6 +149,40 @@ public class ModRecipeProvider extends ForgeRecipeProvider {
                 .pattern(" I ")
                 .pattern(" I ")
                 .pattern(" R ")
+                .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
+                .save(consumer);
+    }
+
+    private void buildArmorRecipes(Consumer<IFinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(ModItems.CARBON_CHESTPLATE.get())
+                .define('I', ModTags.Items.COMPRESSED_COAL)
+                .pattern("I I")
+                .pattern("III")
+                .pattern("III")
+                .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.CARBON_LEGGINGS.get())
+                .define('I', ModTags.Items.COMPRESSED_COAL)
+                .pattern("III")
+                .pattern("I I")
+                .pattern("I I")
+                .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.CARBON_HELMET.get())
+                .define('I', ModTags.Items.COMPRESSED_COAL)
+                .pattern("   ")
+                .pattern("III")
+                .pattern("I I")
+                .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.CARBON_BOOTS.get())
+                .define('I', ModTags.Items.COMPRESSED_COAL)
+                .pattern("   ")
+                .pattern("I I")
+                .pattern("I I")
                 .unlockedBy("has_item", has(ModItems.COMPRESSED_COAL.get()))
                 .save(consumer);
     }

@@ -23,6 +23,13 @@ public class ModNames {
     public static final String CARBON_HOE = "carbon_hoe";
     public static final String CARBON_BOW = "carbon_bow";
 
+    //armor
+    public static final String CARBON_ARMOR = "carbon";
+    public static final String CARBON_CHESTPLATE = "carbon_chestplate";
+    public static final String CARBON_HELMET = "carbon_helmet";
+    public static final String CARBON_LEGS = "carbon_leggings";
+    public static final String CARBON_BOOTS = "carbon_boots";
+
     //recipe serializers
     public static final String COMPRESSING_RECIPES = "compressing";
     public static final String DECOMPRESSING_RECIPES = "decompressing";

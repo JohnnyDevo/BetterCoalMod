@@ -26,6 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         getBuilder(ModNames.COMPRESSED_COAL).parent(itemGenerated).texture("layer0", "item/" + ModNames.COMPRESSED_COAL);
         getBuilder(ModNames.HIGH_QUALITY_CARBON).parent(itemGenerated).texture("layer0", "item/" + ModNames.HIGH_QUALITY_CARBON);
+
         getBuilder(ModNames.CARBON_SWORD).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SWORD);
         getBuilder(ModNames.CARBON_SHOVEL).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SHOVEL);
         getBuilder(ModNames.CARBON_PICKAXE).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_PICKAXE);
@@ -38,5 +39,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         getBuilder(ModNames.CARBON_BOW + "_pulling_1").parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW + "_pulling_1");
         getBuilder(ModNames.CARBON_BOW + "_pulling_2").parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOW + "_pulling_2");
 
+        getBuilder(ModNames.CARBON_CHESTPLATE).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_CHESTPLATE);
+        getBuilder(ModNames.CARBON_HELMET).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_HELMET);
+        getBuilder(ModNames.CARBON_BOOTS).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_BOOTS);
+        getBuilder(ModNames.CARBON_LEGS).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_LEGS);
     }
 }
