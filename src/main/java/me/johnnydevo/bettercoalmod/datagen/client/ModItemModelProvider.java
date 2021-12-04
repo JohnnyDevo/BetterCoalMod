@@ -26,6 +26,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         getBuilder(ModNames.COMPRESSED_COAL).parent(itemGenerated).texture("layer0", "item/" + ModNames.COMPRESSED_COAL);
         getBuilder(ModNames.HIGH_QUALITY_CARBON).parent(itemGenerated).texture("layer0", "item/" + ModNames.HIGH_QUALITY_CARBON);
+        getBuilder(ModNames.CARBON_ROD).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_ROD);
+        getBuilder(ModNames.CARBON_FIBER).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_FIBER);
 
         getBuilder(ModNames.CARBON_SWORD).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SWORD);
         getBuilder(ModNames.CARBON_SHOVEL).parent(itemGenerated).texture("layer0", "item/" + ModNames.CARBON_SHOVEL);
