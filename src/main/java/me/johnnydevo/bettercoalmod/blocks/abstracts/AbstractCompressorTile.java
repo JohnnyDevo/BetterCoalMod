@@ -94,7 +94,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
             NonNullList<Ingredient> ingredients = recipe.getIngredients();
             for (Ingredient ingredient : ingredients) {
                 for (int j = 0; j < items.size(); ++j) {
-                    if (ingredients.get(0).test(items.get(j))) {
+                    if (ingredient.test(items.get(j))) {
                         matches.add(ingredient);
                         items.remove(items.get(j));
                         break;
