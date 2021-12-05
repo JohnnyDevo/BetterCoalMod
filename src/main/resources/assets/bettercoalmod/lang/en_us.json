@@ -8,6 +8,8 @@
 
   "item.bettercoalmod.compressed_coal": "Compressed Coal",
   "item.bettercoalmod.high_quality_carbon": "High Quality Carbon",
+  "item.bettercoalmod.carbon_fiber": "Carbon Fiber",
+  "item.bettercoalmod.carbon_rod": "Carbon Rod",
 
   "item.bettercoalmod.carbon_bow": "Carbon Bow",
   "item.bettercoalmod.carbon_shovel": "Carbon Shovel",
@@ -16,5 +18,8 @@
   "item.bettercoalmod.carbon_hoe": "Carbon Hoe",
   "item.bettercoalmod.carbon_sword": "Carbon Sword",
 
-  "container.bettercoalmod.matter_compressor": "Matter Compressor"
+  "item.bettercoalmod.carbon_chestplate": "Carbon Chestplate",
+  "item.bettercoalmod.carbon_helmet": "Carbon Helmet",
+  "item.bettercoalmod.carbon_leggings": "Carbon Leggings",
+  "item.bettercoalmod.carbon_boots": "Carbon Boots"
 }
