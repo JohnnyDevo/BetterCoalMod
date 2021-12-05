@@ -58,8 +58,9 @@ public class RecompressingCategory implements IRecipeCategory<RecompressingRecip
     public void setRecipe(IRecipeLayout recipeLayout, RecompressingRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
 
-        itemStackGroup.init(0, true, 0, 0);
-        itemStackGroup.init(1, false, 60, 0);
+        itemStackGroup.init(0, true, 12, 8);
+        itemStackGroup.init(1, true, 12, 33);
+        itemStackGroup.init(2, false, 68, 21);
 
         itemStackGroup.set(ingredients);
     }

@@ -58,8 +58,8 @@ public class CompressingCategory implements IRecipeCategory<CompressingRecipe> {
     public void setRecipe(IRecipeLayout recipeLayout, CompressingRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
 
-        itemStackGroup.init(0, true, 0, 0);
-        itemStackGroup.init(1, false, 60, 0);
+        itemStackGroup.init(0, true, 10, 21);
+        itemStackGroup.init(1, false, 68, 21);
 
         itemStackGroup.set(ingredients);
     }

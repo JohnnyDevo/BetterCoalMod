@@ -58,8 +58,8 @@ public class DecompressingCategory implements IRecipeCategory<DecompressingRecip
     public void setRecipe(IRecipeLayout recipeLayout, DecompressingRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup itemStackGroup = recipeLayout.getItemStacks();
 
-        itemStackGroup.init(0, true, 0, 0);
-        itemStackGroup.init(1, false, 60, 0);
+        itemStackGroup.init(0, true, 8, 39);
+        itemStackGroup.init(1, false, 68, 21);
 
         itemStackGroup.set(ingredients);
     }
