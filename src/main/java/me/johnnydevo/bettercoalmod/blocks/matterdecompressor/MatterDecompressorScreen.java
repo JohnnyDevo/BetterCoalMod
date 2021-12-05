@@ -19,7 +19,7 @@ public class MatterDecompressorScreen extends AbstractCompressorScreen<MatterDec
         super.renderBg(pMatrixStack, pPartialTicks, pX, pY);
         int posX = (width - imageWidth) / 2;
         int posY = (height - imageHeight) / 2;
-        blit(pMatrixStack, posX + 79, posY + 35, 176, 14, (int)(menu.getProgressArrowScale() * 24), 16);
+        blit(pMatrixStack, posX + 57, posY + 37, 176, 0, 14, (int)(menu.getBurnTimeScale() * 14));
     }
 
     @Override
