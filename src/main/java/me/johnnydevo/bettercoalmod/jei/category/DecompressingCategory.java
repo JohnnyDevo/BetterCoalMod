@@ -13,6 +13,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class DecompressingCategory implements IRecipeCategory<DecompressingRecipe> {
 
@@ -34,12 +35,12 @@ public class DecompressingCategory implements IRecipeCategory<DecompressingRecip
 
     @Override
     public String getTitle() {
-        return new ItemStack(ModBlocks.MATTER_DECOMPRESSOR.get()).getDisplayName().getString();
+        return new TranslationTextComponent("block.bettercoalmod.matter_decompressor").getString();
     }
 
     @Override
     public IDrawable getBackground() {
-        return helper.createDrawable(new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_compressor.png"), 0, 114, 82, 54);
+        return helper.createDrawable(new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_decompressor.png"), 47, 13, 96, 59);
     }
 
     @Override
