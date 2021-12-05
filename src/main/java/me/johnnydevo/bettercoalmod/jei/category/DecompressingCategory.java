@@ -1,12 +1,19 @@
 package me.johnnydevo.bettercoalmod.jei.category;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import me.johnnydevo.bettercoalmod.BetterCoalMod;
 import me.johnnydevo.bettercoalmod.ModNames;
+import me.johnnydevo.bettercoalmod.crafting.recipe.CompressingRecipe;
 import me.johnnydevo.bettercoalmod.crafting.recipe.DecompressingRecipe;
+import me.johnnydevo.bettercoalmod.crafting.recipe.RecompressingRecipe;
 import me.johnnydevo.bettercoalmod.setup.ModBlocks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -17,15 +24,37 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class DecompressingCategory implements IRecipeCategory<DecompressingRecipe> {
 
-    private IGuiHelper helper;
+    private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
+    private final IDrawableAnimated animatedFire;
+    private final ResourceLocation guiLocation;
+    private final IDrawable gui;
+    private final IDrawable icon;
+    private final String title;
+    private final ResourceLocation uid;
 
     public DecompressingCategory(IGuiHelper helper) {
-        this.helper = helper;
+        guiLocation = new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_decompressor.png");
+        cachedArrows = CacheBuilder.newBuilder()
+                .maximumSize(25)
+                .build(new CacheLoader<Integer, IDrawableAnimated>() {
+                    @Override
+                    public IDrawableAnimated load(Integer cookTime) {
+                        return helper.drawableBuilder(guiLocation, 176, 14, 24, 17)
+                                .buildAnimated(cookTime, IDrawableAnimated.StartDirection.LEFT, false);
+                    }
+                });
+        animatedFire = helper.createAnimatedDrawable(
+                helper.createDrawable(guiLocation, 176, 0, 14, 14),
+                300, IDrawableAnimated.StartDirection.TOP, false);
+        gui = helper.createDrawable(guiLocation, 47, 13, 96, 59);
+        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_RECOMPRESSOR.get()));
+        title = new TranslationTextComponent("block.bettercoalmod.matter_decompressor").getString();
+        uid = new ResourceLocation(BetterCoalMod.MOD_ID, ModNames.DECOMPRESSING_CATEGORY);
     }
 
     @Override
     public ResourceLocation getUid() {
-        return new ResourceLocation(BetterCoalMod.MOD_ID, ModNames.DECOMPRESSING_CATEGORY);
+        return uid;
     }
 
     @Override
@@ -35,17 +64,17 @@ public class DecompressingCategory implements IRecipeCategory<DecompressingRecip
 
     @Override
     public String getTitle() {
-        return new TranslationTextComponent("block.bettercoalmod.matter_decompressor").getString();
+        return title;
     }
 
     @Override
     public IDrawable getBackground() {
-        return helper.createDrawable(new ResourceLocation(BetterCoalMod.MOD_ID, "textures/gui/matter_decompressor.png"), 47, 13, 96, 59);
+        return gui;
     }
 
     @Override
     public IDrawable getIcon() {
-        return helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_DECOMPRESSOR.get()));
+        return icon;
     }
 
     @Override
@@ -62,5 +91,15 @@ public class DecompressingCategory implements IRecipeCategory<DecompressingRecip
         itemStackGroup.init(1, false, 68, 21);
 
         itemStackGroup.set(ingredients);
+    }
+
+    @Override
+    public void draw(DecompressingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        int time = recipe.getCookingTime();
+        if (time <= 0) {
+            time = 200;
+        }
+        cachedArrows.getUnchecked(time).draw(matrixStack, 32, 22);
+        animatedFire.draw(matrixStack, 10, 24);
     }
 }
