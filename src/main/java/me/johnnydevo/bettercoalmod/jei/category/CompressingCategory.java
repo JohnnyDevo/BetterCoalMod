@@ -17,6 +17,8 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -90,7 +92,24 @@ public class CompressingCategory implements IRecipeCategory<CompressingRecipe> {
 
     @Override
     public void draw(CompressingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+        Minecraft minecraft = Minecraft.getInstance();
+        FontRenderer fontRenderer = minecraft.font;
+
+        float exp = recipe.getExperience();
+        if (exp > 0) {
+            TranslationTextComponent expString = new TranslationTextComponent("gui.jei.category.smelting.experience", exp);
+            int stringWidth = fontRenderer.width(expString);
+            fontRenderer.draw(matrixStack, expString, gui.getWidth() - stringWidth, 0, 0xFF808080);
+        }
+
         int time = recipe.getRecipeTime();
+
+        if (time > 0) {
+            int inSeconds = time / 20;
+            TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.smelting.time.seconds", inSeconds);
+            int stringWidth = fontRenderer.width(timeString);
+            fontRenderer.draw(matrixStack, timeString, gui.getWidth() - stringWidth, 45, 0xFF808080);
+        }
         if (time <= 0) {
             time = 200;
         }
