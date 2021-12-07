@@ -49,7 +49,7 @@ public class DecompressingCategory implements IRecipeCategory<DecompressingRecip
                 helper.createDrawable(guiLocation, 176, 0, 14, 14),
                 300, IDrawableAnimated.StartDirection.TOP, false);
         gui = helper.createDrawable(guiLocation, 47, 13, 96, 59);
-        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_RECOMPRESSOR.get()));
+        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_DECOMPRESSOR.get()));
         title = new TranslationTextComponent("block.bettercoalmod.matter_decompressor").getString();
         uid = new ResourceLocation(BetterCoalMod.MOD_ID, ModNames.DECOMPRESSING_CATEGORY);
     }

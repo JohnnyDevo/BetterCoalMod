@@ -44,7 +44,7 @@ public class CompressingCategory implements IRecipeCategory<CompressingRecipe> {
                     }
                 });
         gui = helper.createDrawable(guiLocation, 47, 13, 96, 59);
-        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_RECOMPRESSOR.get()));
+        icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MATTER_COMPRESSOR.get()));
         title = new TranslationTextComponent("block.bettercoalmod.matter_compressor").getString();
         uid = new ResourceLocation(BetterCoalMod.MOD_ID, ModNames.COMPRESSING_CATEGORY);
     }
