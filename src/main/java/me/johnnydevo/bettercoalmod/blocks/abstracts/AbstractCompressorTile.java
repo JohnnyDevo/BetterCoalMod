@@ -34,8 +34,8 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
     public final IIntArray fields = makeFields();
     protected IRecipeType<T> recipeType;
 
-    protected ItemStackHandler itemHandler = createHandler();
-    protected LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    protected ItemStackHandler[] itemHandlers = createHandlers();
+    protected LazyOptional<IItemHandler>[] handlers = createOptionals(itemHandlers);
 
     protected int progress = 0;
     protected int currentRecipeTime = 0;
@@ -50,7 +50,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
 
     protected abstract IIntArray makeFields();
 
-    protected abstract ItemStackHandler createHandler();
+    protected abstract ItemStackHandler[] createHandlers();
 
     protected abstract int getRecipeTime(T recipe);
 
@@ -80,14 +80,14 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
             return null;
         }
         for (int i : inputSlots) {
-            if (itemHandler.getStackInSlot(i).isEmpty()) {
+            if (itemHandlers[i].getStackInSlot(0).isEmpty()) {
                 return null;
             }
         }
         for (T recipe : level.getRecipeManager().getAllRecipesFor(recipeType)) {
             ArrayList<ItemStack> items = new ArrayList<>();
             for (int i : inputSlots) {
-                items.add(itemHandler.getStackInSlot(i));
+                items.add(itemHandlers[i].getStackInSlot(0));
             }
 
             NonNullList<Ingredient> matches = NonNullList.create();
@@ -141,7 +141,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
     }
 
     protected void doWork(T recipe) {
-        ItemStack current = itemHandler.getStackInSlot(outputSlot);
+        ItemStack current = itemHandlers[outputSlot].getStackInSlot(0);
         ItemStack output = getWorkOutput(recipe);
         currentRecipeTime = getRecipeTime(recipe);
 
@@ -161,28 +161,30 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
     }
 
     protected void finishWork(T recipe) {
-        itemHandler.insertItem(outputSlot, recipe.getResultItem().copy(), false);
+        itemHandlers[outputSlot].insertItem(0, recipe.getResultItem().copy(), false);
         progress = 0;
         currentRecipeTime = 0;
         savedExp += getRecipeExperience(recipe);
         for (int i : inputSlots) {
-            itemHandler.extractItem(i, 1, false);
+            itemHandlers[i].extractItem(0, 1, false);
         }
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-        handler.invalidate();
+        for (LazyOptional<IItemHandler> handler : handlers) {
+            handler.invalidate();
+        }
     }
 
-    @Override
-    public <C> LazyOptional<C> getCapability(Capability<C> cap, Direction side) {
-        if (!this.remove && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return handler.cast();
-        } else {
-            return super.getCapability(cap, side);
+    private LazyOptional<IItemHandler>[] createOptionals(ItemStackHandler[] handlers) {
+        LazyOptional<IItemHandler>[] retval = new LazyOptional[handlers.length];
+        for (int i = 0; i < handlers.length; ++i) {
+            final int index = i;
+            retval[index] = LazyOptional.of(() -> handlers[index]);
         }
+        return retval;
     }
 
     @Override
@@ -193,7 +195,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
         NonNullList<ItemStack> items = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(tags, items);
         for (int i = 0; i < inventorySize; ++i) {
-            itemHandler.insertItem(i, items.get(i), false);
+            itemHandlers[i].insertItem(0, items.get(i), false);
         }
 
         progress = tags.getInt("Progress");
@@ -208,7 +210,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
         int inventorySize = outputSlot + 1;
         NonNullList<ItemStack> items = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         for (int i = 0; i < inventorySize; ++i) {
-            items.set(i, itemHandler.getStackInSlot(i));
+            items.set(i, itemHandlers[i].getStackInSlot(0));
         }
         ItemStackHelper.saveAllItems(tags, items);
 
@@ -226,7 +228,7 @@ public abstract class AbstractCompressorTile<T extends IRecipe<IInventory>> exte
         int inventorySize = outputSlot + 1;
         NonNullList<ItemStack> items = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
         for (int i = 0; i < inventorySize; ++i) {
-            items.set(i, itemHandler.getStackInSlot(i));
+            items.set(i, itemHandlers[i].getStackInSlot(0));
         }
         ItemStackHelper.saveAllItems(tags, items);
 

@@ -11,7 +11,11 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -83,8 +87,9 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
     }
 
     @Override
-    protected ItemStackHandler createHandler() {
-        return new ItemStackHandler(3) {
+    protected ItemStackHandler[] createHandlers() {
+        ItemStackHandler[] retval = new ItemStackHandler[3];
+        retval[0] = new ItemStackHandler(1) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
@@ -92,25 +97,13 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == 0) {
-                    if (allowedInputs != null) {
-                        for (Item item : allowedInputs) {
-                            if (item == stack.getItem()) {
-                                return true;
-                            }
+                if (allowedInputs != null) {
+                    for (Item item : allowedInputs) {
+                        if (item == stack.getItem()) {
+                            return true;
                         }
-                        return false;
                     }
-                }
-                if (slot == 1) {
-                    if (stack.isEmpty()) {
-                        return false;
-                    }
-                    Integer burnTime = stack.getBurnTime(IRecipeType.SMELTING);
-                    if (burnTime == -1) {
-                        burnTime = FurnaceTileEntity.getFuel().get(stack.getItem());
-                    }
-                    return (burnTime != null && burnTime > 0);
+                    return false;
                 }
                 return true;
             }
@@ -124,6 +117,68 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
                 return super.insertItem(slot, stack, simulate);
             }
         };
+        retval[1] = new ItemStackHandler(1) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                Integer burnTime = stack.getBurnTime(IRecipeType.SMELTING);
+                if (burnTime == -1) {
+                    burnTime = FurnaceTileEntity.getFuel().get(stack.getItem());
+                }
+                return (burnTime != null && burnTime > 0);
+            }
+
+            @Nonnull
+            @Override
+            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                if (!isItemValid(slot, stack)) {
+                    return stack;
+                }
+                return super.insertItem(slot, stack, simulate);
+            }
+        };
+        retval[2] = new ItemStackHandler(1) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return true;
+            }
+
+            @Nonnull
+            @Override
+            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                if (!isItemValid(slot, stack)) {
+                    return stack;
+                }
+                return super.insertItem(slot, stack, simulate);
+            }
+        };
+        return retval;
+    }
+
+    @Override
+    public <C> LazyOptional<C> getCapability(Capability<C> cap, Direction side) {
+        if (!this.remove && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (side == Direction.UP) {
+                return handlers[0].cast();
+            } else if (side == Direction.DOWN) {
+                return handlers[2].cast();
+            } else if (side == Direction.NORTH || side == Direction.SOUTH || side == Direction.EAST || side == Direction.WEST) {
+                return handlers[1].cast();
+            }
+        }
+        return super.getCapability(cap, side);
     }
 
     @Override
@@ -158,7 +213,7 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
         }
         if (recipe != null) {
             if (consumeFuel) {
-                ItemStack fuel = itemHandler.getStackInSlot(1);
+                ItemStack fuel = itemHandlers[1].getStackInSlot(0);
                 if (fuel.isEmpty()) {
                     resetBurn();
                     return false;
@@ -168,7 +223,7 @@ public class MatterDecompressorTile extends AbstractCompressorTile<Decompressing
                     burnTime = FurnaceTileEntity.getFuel().get(fuel.getItem());
                 }
                 if (burnTime != null && burnTime > 0) {
-                    itemHandler.extractItem(1, 1, false);
+                    itemHandlers[1].extractItem(0, 1, false);
                     currentBurnTime = burnTime;
                     burnProgress = 0;
                 } else {
